@@ -1,0 +1,43 @@
+# Bootstrap
+app/bootstrap*
+#!app/SymfonyRequirements*
+#!app/autoload*
+#!app/check*
+#!app/console*
+#!app/Resources/*
+#!app/Resources/views/*
+# Configuration files
+app/config/parameters.ini
+app/config/parameters.yml
+!app/config/
+
+
+# Symfony directories
+vendor/*
+*/logs/*
+*/cache/*
+web/uploads/*
+web/bundles/acmedemo
+web/bundles/framework
+web/bundles/sensiodistribution
+web/css/vendor/twbs/*
+
+# Composer
+composer.phar
+
+# PHPStorm
+.idea/*
+
+# Cache & Logs
+app/cache/*
+!app/cache/.gitkeep
+app/logs/*
+!app/logs/.gitkeep
+
+# Node/NPM/Grunt
+node_modules
+.npm-debug.log
+tmp
+
+# Misc.
+nohup.out
