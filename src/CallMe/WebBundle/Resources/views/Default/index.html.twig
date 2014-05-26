@@ -1,0 +1,50 @@
+{% extends "CallMeWebBundle::layout.html.twig" %}
+
+{% block content %}
+    <hr>
+
+    <div class="row">
+        <div class="col-lg-8 col-sm-8">
+            <h2>What We Do</h2>
+            <p>Want to send phone calls through audio files? Using our web application, we allow you to do so at a cheap rate.</p>
+            <p><a class="btn btn-info btn-large" href="/register">Sign Up &raquo;</a>
+            </p>
+        </div>
+        <div class="col-lg-4 col-sm-4">
+            <h2>Contact Us</h2>
+            <address>
+                <strong>CallMe, Inc.</strong>
+                <br>123 Fake Street, Suite #60
+                <br>New York, NY 12345
+                <br>
+            </address>
+            <address>
+                <abbr title="Phone">P:</abbr>(123) 456-7890
+                <br>
+                <abbr title="Email">E:</abbr> <a href="mailto:#">support@callme.com</a>
+            </address>
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="row">
+        <div class="col-sm-4">
+            <img class="img-responsive text-center img-marketing" src="{{ asset('bundles/callme/images/phone.png') }}">
+            <h2>Phone Calls</h2>
+            <p>Send audio to any number, any time.</p>
+        </div>
+        <div class="col-sm-4">
+            <img class="img-responsive img-marketing" src="{{ asset('bundles/callme/images/txt.png') }}">
+            <h2>Text Messages</h2>
+            <p>Schedule text messages</p>
+        </div>
+        <div class="col-sm-4">
+            <img class="img-responsive img-marketing" src="{{ asset('bundles/callme/images/docs.png') }}">
+            <h2>Reporting</h2>
+            <p>Extensive reporting tools</p>
+        </div>
+    </div>
+
+    <hr>
+{% endblock %}

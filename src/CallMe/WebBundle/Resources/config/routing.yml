@@ -1,0 +1,3 @@
+call_me_web_homepage:
+    pattern:  /
+    defaults: { _controller: CallMeWebBundle:Default:index }
