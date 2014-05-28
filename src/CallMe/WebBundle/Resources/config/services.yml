@@ -1,3 +1,10 @@
 parameters:
 
 services:
+    db:
+        class: PDO
+        arguments: ["mysql:dbname=%database_name%", %database_user%, %database_password%]
+
+    user_manager:
+        class: CallMe\WebBundle\Entity\User\UserManager
+        arguments: [@db]
