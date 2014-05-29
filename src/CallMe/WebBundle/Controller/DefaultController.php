@@ -10,4 +10,9 @@ class DefaultController extends Controller
     {
         return $this->render('CallMeWebBundle:Default:index.html.twig');
     }
+
+    public function registerAction()
+    {
+        return $this->render('CallMeWebBundle:Default:register.html.twig');
+    }
 }
