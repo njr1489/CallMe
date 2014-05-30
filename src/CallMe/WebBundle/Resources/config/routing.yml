@@ -5,3 +5,7 @@ call_me_web_homepage:
 register_page:
     path:     /register
     defaults: { _controller: CallMeWebBundle:Default:register }
+
+process_register:
+    path:     /process-register
+    defaults: { _controller: CallMeWebBundle:Default:processRegister }

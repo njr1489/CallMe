@@ -36,4 +36,18 @@ class UserManager extends AbstractManager
         }
         return $user;
     }
+
+    public function createUser(array $data)
+    {
+        $user = $this->userFactory->create($data);
+
+        $statement = $this->db->prepare('INSERT INTO users (first_name, last_name, email, password) VALUES (:first_name, :last_name, :email, :password)');
+        $statement->bindValue('first_name', $user->getFirstName());
+        $statement->bindValue('last_name', $user->getLastName());
+        $statement->bindValue('email', $user->getEmail());
+        $statement->bindValue('password', $user->getPassword());
+        $statement->execute();
+
+        return $this->db->lastInsertId();
+    }
 }
