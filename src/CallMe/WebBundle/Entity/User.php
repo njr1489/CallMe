@@ -53,7 +53,7 @@ class User
     }
 
     /**
-     * @param $id
+     * @param int $id
      */
     public function setId($id)
     {
