@@ -12,6 +12,12 @@ class UserFactory
      */
     public function create(array $params)
     {
-        return new User($params['id']);
+        return new User(
+            isset($params['id']) ? $params['id'] : null,
+            $params['first_name'],
+            $params['last_name'],
+            $params['email'],
+            $params['password']
+        );
     }
 }

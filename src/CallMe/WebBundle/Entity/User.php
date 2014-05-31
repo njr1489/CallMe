@@ -25,14 +25,39 @@ class User
      * @param $lastName
      * @param $email
      * @param $password
+     * @throws \InvalidArgumentException
      */
     public function __construct($id = null, $firstName, $lastName, $email, $password)
     {
         $this->id = $id;
+
+        if (!$firstName) {
+            throw new \InvalidArgumentException('The User\'s first name cannot be empty');
+        }
         $this->firstName = $firstName;
+
+        if (!$lastName) {
+            throw new \InvalidArgumentException('The User\'s last name cannot be empty');
+        }
         $this->lastName = $lastName;
+
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            throw new \InvalidArgumentException('This is not a valid email address');
+        }
         $this->email = $email;
+
+        if (strlen($password) < 5) {
+            throw new \InvalidArgumentException('The password must be five characters long');
+        }
         $this->password = $password;
+    }
+
+    /**
+     * @param $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
     }
 
     /**

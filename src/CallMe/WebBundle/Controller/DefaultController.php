@@ -21,5 +21,7 @@ class DefaultController extends Controller
     public function processRegisterAction(Request $request)
     {
         $data = $request->request->all();
+        $this->get('user_manager')->createUser($data);
+        return $this->redirect($this->generateUrl('call_me_web_homepage'));
     }
 }
