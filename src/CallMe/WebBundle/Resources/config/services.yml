@@ -5,6 +5,9 @@ services:
         class: PDO
         arguments: ["mysql:dbname=%database_name%", %database_user%, %database_password%]
 
+    user_factory:
+        class: CallMe\WebBundle\Entity\User\UserFactory
+
     user_manager:
         class: CallMe\WebBundle\Entity\User\UserManager
-        arguments: [@db]
+        arguments: [@db, @user_factory]

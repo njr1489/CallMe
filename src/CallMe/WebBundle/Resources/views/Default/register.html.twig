@@ -1,0 +1,32 @@
+{% extends "CallMeWebBundle::layout.html.twig" %}
+
+{% block content %}
+    <div class="col-md-4 col-md-offset-4">
+    <form action="/process-register" method="post">
+        <div class="form-group">
+            <label for="first_name">First Name</label>
+            <input class="form-control" type="text" name="first_name" id="first_name"/>
+        </div>
+        <div class="form-group">
+            <label for="last_name">Last Name</label>
+            <input class="form-control" type="text" name="last_name" id="last_name"/>
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input class="form-control" type="text" name="email" id="email"/>
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input class="form-control" type="password" name="password" id="password"/>
+        </div>
+        <div>
+            <button type="submit" class="btn btn-info">Submit</button>
+        </div>
+
+        <div class="robotic" id="pot">
+            <label>Leave blank:</label>
+            <input name="robotest" type="text" id="robotest" class="robotest"/>
+        </div>
+    </form>
+    </div>
+{% endblock %}
