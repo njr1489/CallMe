@@ -49,7 +49,7 @@ class User
         if (strlen($password) < 5) {
             throw new \InvalidArgumentException('The password must be five characters long');
         }
-        $this->password = $password;
+        $this->setPassword($password);
     }
 
     /**
@@ -98,5 +98,13 @@ class User
     public function getPassword()
     {
         return $this->password;
+    }
+
+    /**
+     * @param $password
+     */
+    protected function setPassword($password)
+    {
+        $this->password = password_hash($password, PASSWORD_DEFAULT);
     }
 }
