@@ -2,3 +2,10 @@ call_me_web:
     resource: "@CallMeWebBundle/Resources/config/routing.yml"
     prefix:   /
 
+    login:
+      path: /login
+      defaults: {_controller: CallMeWebBundle:Security:login}
+
+    login_check:
+      path: /login_check
+
