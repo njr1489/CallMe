@@ -2,7 +2,9 @@
 
 namespace CallMe\WebBundle\Entity;
 
-class User
+use Symfony\Component\Security\Core\User\UserInterface;
+
+class User implements UserInterface, \Serializable
 {
     /** @var int */
     protected $id;
@@ -98,5 +100,63 @@ class User
     public function getPassword()
     {
         return $this->password;
+    }
+
+    /**
+     * @return array|\Symfony\Component\Security\Core\Role\Role[]
+     */
+    public function getRoles()
+    {
+        return ['ROLE_USER'];
+    }
+
+    /**
+     * @return null|string|void
+     * @throws \BadMethodCallException
+     */
+    public function getSalt()
+    {
+        throw new \BadMethodCallException('We use bcrypt, a salt is not needed');
+    }
+
+    /**
+     * @return string
+     */
+    public function getUsername()
+    {
+        return $this->email;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function eraseCredentials()
+    {
+
+    }
+
+    /**
+     * @return string
+     */
+    public function serialize()
+    {
+        return serialize([
+            'id' => $this->id,
+            'first_name' => $this->firstName,
+            'last_name' => $this->lastName,
+            'email' => $this->email
+        ]);
+    }
+
+    /**
+     * @param string $serialized
+     */
+    public function unserialize($serialized)
+    {
+        $data = unserialize($serialized);
+        $this->id = $data['id'];
+        $this->firstName = $data['first_name'];
+        $this->lastName = $data['last_name'];
+        $this->email = $data['email'];
     }
 }
