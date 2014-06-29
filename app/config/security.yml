@@ -20,19 +20,17 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
-        login:
-            pattern: ^/login$
-            anonymous: ~
-
         secured_area:
             pattern: ^/
+            anonymous: ~
             form_login:
                 login_path: login
                 check_path: login_check
+                default_target_path: /dashboard
+                always_use_default_target_path: true
             logout:
                 path: logout
                 target: /
-                invalidate_session: false
 
     access_control:
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
