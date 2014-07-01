@@ -9,6 +9,8 @@ security:
         ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
 
     providers:
+        database:
+            id: user_manager
         in_memory:
             memory:
                 users:
