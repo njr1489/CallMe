@@ -20,14 +20,14 @@ class User
     protected $password;
 
     /**
-     * @param null $id
+     * @param int $id
      * @param $firstName
      * @param $lastName
      * @param $email
      * @param $password
      * @throws \InvalidArgumentException
      */
-    public function __construct($id = null, $firstName, $lastName, $email, $password)
+    public function __construct($id, $firstName, $lastName, $email, $password)
     {
         $this->id = $id;
 
