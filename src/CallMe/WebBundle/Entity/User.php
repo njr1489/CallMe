@@ -21,15 +21,18 @@ class User implements UserInterface, \Serializable
     /** @var string */
     protected $password;
 
+    /** @var string */
+    protected $salt = '';
+
     /**
-     * @param null $id
+     * @param int $id
      * @param $firstName
      * @param $lastName
      * @param $email
      * @param $password
      * @throws \InvalidArgumentException
      */
-    public function __construct($id = null, $firstName, $lastName, $email, $password)
+    public function __construct($id, $firstName, $lastName, $email, $password)
     {
         $this->id = $id;
 
@@ -51,7 +54,7 @@ class User implements UserInterface, \Serializable
         if (strlen($password) < 5) {
             throw new \InvalidArgumentException('The password must be five characters long');
         }
-        $this->password = $password;
+        $this->setPassword($password);
     }
 
     /**
@@ -112,11 +115,11 @@ class User implements UserInterface, \Serializable
 
     /**
      * @return null|string|void
-     * @throws \BadMethodCallException
      */
     public function getSalt()
     {
-        throw new \BadMethodCallException('We use bcrypt, a salt is not needed');
+        return $this->salt;
+        //throw new \BadMethodCallException('We use bcrypt, a salt is not needed');
     }
 
     /**
@@ -144,7 +147,8 @@ class User implements UserInterface, \Serializable
             'id' => $this->id,
             'first_name' => $this->firstName,
             'last_name' => $this->lastName,
-            'email' => $this->email
+            'email' => $this->email,
+            'salt' => ''
         ]);
     }
 
@@ -158,5 +162,14 @@ class User implements UserInterface, \Serializable
         $this->firstName = $data['first_name'];
         $this->lastName = $data['last_name'];
         $this->email = $data['email'];
+        $this->salt = '';
+    }
+
+    /**
+     * @param $password
+     */
+    protected function setPassword($password)
+    {
+        $this->password = password_hash($password, PASSWORD_DEFAULT);
     }
 }
