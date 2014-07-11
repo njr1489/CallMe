@@ -22,14 +22,14 @@ class User implements UserInterface, \Serializable
     protected $password;
 
     /**
-     * @param null $id
+     * @param int $id
      * @param $firstName
      * @param $lastName
      * @param $email
      * @param $password
      * @throws \InvalidArgumentException
      */
-    public function __construct($id = null, $firstName, $lastName, $email, $password)
+    public function __construct($id, $firstName, $lastName, $email, $password)
     {
         $this->id = $id;
 
@@ -51,7 +51,7 @@ class User implements UserInterface, \Serializable
         if (strlen($password) < 5) {
             throw new \InvalidArgumentException('The password must be five characters long');
         }
-        $this->password = $password;
+        $this->setPassword($password);
     }
 
     /**
@@ -100,6 +100,14 @@ class User implements UserInterface, \Serializable
     public function getPassword()
     {
         return $this->password;
+    }
+
+    /**
+     * @param $password
+     */
+    protected function setPassword($password)
+    {
+        $this->password = password_hash($password, PASSWORD_DEFAULT);
     }
 
     /**
