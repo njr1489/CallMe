@@ -106,6 +106,14 @@ class User implements UserInterface, \Serializable
     }
 
     /**
+     * @param $password
+     */
+    protected function setPassword($password)
+    {
+        $this->password = password_hash($password, PASSWORD_DEFAULT);
+    }
+
+    /**
      * @return array|\Symfony\Component\Security\Core\Role\Role[]
      */
     public function getRoles()
@@ -163,13 +171,5 @@ class User implements UserInterface, \Serializable
         $this->lastName = $data['last_name'];
         $this->email = $data['email'];
         $this->salt = '';
-    }
-
-    /**
-     * @param $password
-     */
-    protected function setPassword($password)
-    {
-        $this->password = password_hash($password, PASSWORD_DEFAULT);
     }
 }

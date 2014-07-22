@@ -22,7 +22,9 @@
         "incenteev/composer-parameter-handler": "~2.0",
         "phpunit/phpunit": "4.0.12",
         "squizlabs/php_codesniffer": "dev-master",
+        "aws/aws-sdk-php": "2.6.7",
         "doctrine/doctrine-migrations-bundle": "2.1.*@dev"
+
     },
     "scripts": {
         "post-install-cmd": [
