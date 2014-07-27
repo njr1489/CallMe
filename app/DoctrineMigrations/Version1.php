@@ -10,7 +10,7 @@ class Version1 extends AbstractMigration
     public function up(Schema $schema)
     {
         $this->addSql("CREATE TABLE users(
-            id int PRIMARY KEY,
+            id int PRIMARY KEY AUTO_INCREMENT,
             first_name VARCHAR(25) NOT NULL,
             last_name VARCHAR(25) NOT NULL,
             email VARCHAR(200) NOT NULL,

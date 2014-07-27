@@ -79,6 +79,7 @@ class UserManager extends AbstractManager implements UserProviderInterface
             throw new UsernameNotFoundException(sprintf('Username "%s" does not exist.', $username));
         }
 
+        $data['encode_password'] = false;
         return $this->userFactory->create($data);
     }
 

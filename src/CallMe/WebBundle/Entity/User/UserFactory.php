@@ -17,7 +17,8 @@ class UserFactory
             $params['first_name'],
             $params['last_name'],
             $params['email'],
-            $params['password']
+            $params['password'],
+            isset($params['encode_password']) ? $params['encode_password'] : true
         );
     }
 }

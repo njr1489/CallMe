@@ -30,9 +30,10 @@ class User implements UserInterface, \Serializable
      * @param $lastName
      * @param $email
      * @param $password
+     * @param $encodePassword
      * @throws \InvalidArgumentException
      */
-    public function __construct($id, $firstName, $lastName, $email, $password)
+    public function __construct($id, $firstName, $lastName, $email, $password, $encodePassword = true)
     {
         $this->id = $id;
 
@@ -54,7 +55,7 @@ class User implements UserInterface, \Serializable
         if (strlen($password) < 5) {
             throw new \InvalidArgumentException('The password must be five characters long');
         }
-        $this->setPassword($password);
+        $this->setPassword($password, $encodePassword);
     }
 
     /**
@@ -107,10 +108,14 @@ class User implements UserInterface, \Serializable
 
     /**
      * @param $password
+     * @param bool $encodePassword
      */
-    protected function setPassword($password)
+    protected function setPassword($password, $encodePassword = true)
     {
-        $this->password = password_hash($password, PASSWORD_DEFAULT);
+        if ($encodePassword) {
+            $password = password_hash($password, PASSWORD_DEFAULT);
+        }
+        $this->password = $password;
     }
 
     /**
@@ -127,7 +132,6 @@ class User implements UserInterface, \Serializable
     public function getSalt()
     {
         return $this->salt;
-        //throw new \BadMethodCallException('We use bcrypt, a salt is not needed');
     }
 
     /**
