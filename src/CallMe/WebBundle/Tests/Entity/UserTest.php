@@ -1,6 +1,7 @@
 <?php
 
 namespace CallMe\WebBundle\Tests\Entity;
+
 use CallMe\WebBundle\Entity\User;
 
 class UserTest extends \PHPUnit_Framework_TestCase

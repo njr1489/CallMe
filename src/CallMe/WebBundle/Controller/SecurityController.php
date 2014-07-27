@@ -14,8 +14,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 
-
-class SecurityController extends Controller {
+class SecurityController extends Controller
+{
 
     public function loginAction(Request $request)
     {
@@ -45,5 +45,4 @@ class SecurityController extends Controller {
             )
         );
     }
-
 }

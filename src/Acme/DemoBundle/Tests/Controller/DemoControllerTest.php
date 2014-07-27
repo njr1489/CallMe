@@ -8,6 +8,7 @@ class DemoControllerTest extends WebTestCase
 {
     public function testIndex()
     {
+        $this->markTestSkipped();
         $client = static::createClient();
 
         $crawler = $client->request('GET', '/demo/hello/Fabien');
@@ -17,6 +18,7 @@ class DemoControllerTest extends WebTestCase
 
     public function testSecureSection()
     {
+        $this->markTestSkipped();
         $client = static::createClient();
 
         // goes to the secure page
