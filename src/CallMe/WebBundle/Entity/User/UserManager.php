@@ -105,6 +105,6 @@ class UserManager extends AbstractManager implements UserProviderInterface
      */
     public function supportsClass($class)
     {
-        return $class === 'CallMe\WebBundle\Entity\User';
+        return $class === User::class;
     }
 }
