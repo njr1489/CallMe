@@ -1,4 +1,3 @@
 call_me_web:
     resource: "@CallMeWebBundle/Resources/config/routing.yml"
     prefix:   /
-

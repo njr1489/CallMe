@@ -3,9 +3,19 @@ call_me_web_homepage:
     defaults: { _controller: CallMeWebBundle:Default:index }
 
 register_page:
-    path:     /register
+    pattern:     /register
     defaults: { _controller: CallMeWebBundle:Default:register }
 
 process_register:
-    path:     /process-register
+    pattern:     /process-register
     defaults: { _controller: CallMeWebBundle:Default:processRegister }
+
+login:
+    pattern: /login
+    defaults: { _controller: CallMeWebBundle:Security:login }
+
+login_check:
+    pattern: /login_check
+
+logout:
+    pattern: /logout

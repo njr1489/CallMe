@@ -3,8 +3,13 @@
 namespace CallMe\WebBundle\Entity\User;
 
 use CallMe\WebBundle\Core\AbstractManager;
+use CallMe\WebBundle\Entity\User;
+use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\UserProviderInterface;
+use Symfony\Component\Serializer\Exception\UnsupportedException;
 
-class UserManager extends AbstractManager
+class UserManager extends AbstractManager implements UserProviderInterface
 {
     /** @var \CallMe\WebBundle\Entity\User\UserFactory */
     protected $userFactory;
@@ -21,7 +26,7 @@ class UserManager extends AbstractManager
 
     /**
      * @param $id
-     * @return \CallMe\WebBundle\Entity\User|null
+     * @return User|null
      */
     public function fetchById($id)
     {
@@ -57,5 +62,49 @@ class UserManager extends AbstractManager
         $user->setId($this->db->lastInsertId());
 
         return $user;
+    }
+
+    /**
+     * @param $username
+     * @return User
+     * @throws \Symfony\Component\Security\Core\Exception\UsernameNotFoundException
+     */
+    public function loadUserByUsername($username)
+    {
+        $statement = $this->db->prepare('SELECT * FROM users WHERE email = :email');
+        $statement->bindValue('email', $username);
+        $statement->execute();
+
+        if (!$data = $statement->fetch(\PDO::FETCH_ASSOC)) {
+            throw new UsernameNotFoundException(sprintf('Username "%s" does not exist.', $username));
+        }
+
+        $data['encode_password'] = false;
+        return $this->userFactory->create($data);
+    }
+
+    /**
+     * @param UserInterface $user
+     * @return UserInterface
+     * @throws \Symfony\Component\Serializer\Exception\UnsupportedException
+     */
+    public function refreshUser(UserInterface $user)
+    {
+        if (!$user instanceof User) {
+            throw new UnsupportedException(
+                sprintf('Instances of "%s" are not supported.', get_class($user))
+            );
+        }
+
+        return $this->loadUserByUsername($user->getUsername());
+    }
+
+    /**
+     * @param string $class
+     * @return bool
+     */
+    public function supportsClass($class)
+    {
+        return $class === User::class;
     }
 }

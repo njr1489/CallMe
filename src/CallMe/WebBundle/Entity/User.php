@@ -2,7 +2,9 @@
 
 namespace CallMe\WebBundle\Entity;
 
-class User
+use Symfony\Component\Security\Core\User\UserInterface;
+
+class User implements UserInterface, \Serializable
 {
     /** @var int */
     protected $id;
@@ -19,15 +21,19 @@ class User
     /** @var string */
     protected $password;
 
+    /** @var string */
+    protected $salt = '';
+
     /**
      * @param int $id
      * @param $firstName
      * @param $lastName
      * @param $email
      * @param $password
+     * @param $encodePassword
      * @throws \InvalidArgumentException
      */
-    public function __construct($id, $firstName, $lastName, $email, $password)
+    public function __construct($id, $firstName, $lastName, $email, $password, $encodePassword = true)
     {
         $this->id = $id;
 
@@ -49,7 +55,7 @@ class User
         if (strlen($password) < 5) {
             throw new \InvalidArgumentException('The password must be five characters long');
         }
-        $this->setPassword($password);
+        $this->setPassword($password, $encodePassword);
     }
 
     /**
@@ -102,9 +108,72 @@ class User
 
     /**
      * @param $password
+     * @param bool $encodePassword
      */
-    protected function setPassword($password)
+    protected function setPassword($password, $encodePassword = true)
     {
-        $this->password = password_hash($password, PASSWORD_DEFAULT);
+        if ($encodePassword) {
+            $password = password_hash($password, PASSWORD_DEFAULT);
+        }
+        $this->password = $password;
+    }
+
+    /**
+     * @return array|\Symfony\Component\Security\Core\Role\Role[]
+     */
+    public function getRoles()
+    {
+        return ['ROLE_USER'];
+    }
+
+    /**
+     * @return null|string|void
+     */
+    public function getSalt()
+    {
+        return $this->salt;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUsername()
+    {
+        return $this->email;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function eraseCredentials()
+    {
+
+    }
+
+    /**
+     * @return string
+     */
+    public function serialize()
+    {
+        return serialize([
+            'id' => $this->id,
+            'first_name' => $this->firstName,
+            'last_name' => $this->lastName,
+            'email' => $this->email,
+            'salt' => ''
+        ]);
+    }
+
+    /**
+     * @param string $serialized
+     */
+    public function unserialize($serialized)
+    {
+        $data = unserialize($serialized);
+        $this->id = $data['id'];
+        $this->firstName = $data['first_name'];
+        $this->lastName = $data['last_name'];
+        $this->email = $data['email'];
+        $this->salt = '';
     }
 }
