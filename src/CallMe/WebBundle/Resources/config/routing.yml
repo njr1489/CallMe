@@ -19,3 +19,13 @@ login_check:
 
 logout:
     pattern: /logout
+
+user_settings:
+   pattern: /settings
+   defaults: { _controller: CallMeWebBundle:User:settings }
+   methods: [GET]
+
+process_user_settings:
+   pattern: /process-user-settings
+   defaults: { _controller: CallMeWebBundle:User:processSettings }
+   methods: [POST]
