@@ -65,6 +65,27 @@ class UserManager extends AbstractManager implements UserProviderInterface
     }
 
     /**
+     * @param array $data
+     * @return User
+     */
+    public function updateUser(array $data)
+    {
+        $user = $this->userFactory->create($data);
+
+        $statement = $this->db->prepare(
+            'UPDATE users SET first_name = :first_name, last_name = :last_name, email = :email, password = :password WHERE id = :id'
+        );
+        $statement->bindValue('id', $user->getId());
+        $statement->bindValue('first_name', $user->getFirstName());
+        $statement->bindValue('last_name', $user->getLastName());
+        $statement->bindValue('email', $user->getEmail());
+        $statement->bindValue('password', $user->getPassword());
+        $statement->execute();
+
+        return $user;
+    }
+
+    /**
      * @param $username
      * @return User
      * @throws \Symfony\Component\Security\Core\Exception\UsernameNotFoundException
