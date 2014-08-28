@@ -1,14 +1,6 @@
 <?php
-/**
- * Created by JetBrains PhpStorm.
- * User: adamc
- * Date: 8/7/14
- * Time: 9:02 PM
- * To change this template use File | Settings | File Templates.
- */
 
 namespace CallMe\WebBundle\Controller;
-
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
