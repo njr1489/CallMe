@@ -31,10 +31,10 @@
                             <li><a href="#services">Services</a></li>
                             <li><a href="#contact">Contact</a></li>
                             {% if app.user %}
-                                <li><a href="/settings">Settings</a></li>
-                                <li><a href="/logout">Logout</a></li>
+                                <li><a href="{{ path('user_settings') }}">Settings</a></li>
+                                <li><a href="{{ path('logout') }}">Logout</a></li>
                             {% else %}
-                                <li><a href="/login">Sign In</a></li>
+                                <li><a href="{{ path('login') }}">Sign In</a></li>
                             {% endif %}
                         </ul>
                     </div>
