@@ -20,6 +20,15 @@ login_check:
 logout:
     pattern: /logout
 
+forgot_password:
+    pattern: /forgot-password
+    defaults: { _controller: CallMeWebBundle:Security:forgotPassword }
+
+process_forgot_password:
+    pattern: /process-forgot-password
+    defaults: { _controller: CallMeWebBundle:Security:processForgotPassword }
+    methods: [POST]
+
 user_settings:
    pattern: /settings
    defaults: { _controller: CallMeWebBundle:User:settings }

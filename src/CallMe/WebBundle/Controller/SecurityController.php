@@ -12,11 +12,15 @@ namespace CallMe\WebBundle\Controller;
 use CallMe\WebBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 
 class SecurityController extends Controller
 {
-
+    /**
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function loginAction(Request $request)
     {
         $session = $request->getSession();
@@ -44,5 +48,36 @@ class SecurityController extends Controller
                 'error'         => $error,
             )
         );
+    }
+
+    public function forgotPasswordAction()
+    {
+        return $this->render('CallMeWebBundle:Security:forgot-password.html.twig');
+    }
+
+    /**
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function processForgotPasswordAction(Request $request)
+    {
+        $email = $request->request->get('email');
+        try {
+            $this->get('user_manager')->loadUserByUsername($email);
+            // @TODO: Reset password logic
+            $this->get('session')->getFlashBag()->add(
+                'email',
+                'Email has been sent to ' . $email
+            );
+
+            return $this->redirect($this->generateUrl('login'));
+        } catch (UsernameNotFoundException $e) {
+            $this->get('session')->getFlashBag()->add(
+                'email',
+                $email . ' could not be found'
+            );
+
+            return $this->redirect($this->generateUrl('forgot_password'));
+        }
     }
 }
