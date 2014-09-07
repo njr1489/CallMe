@@ -2,9 +2,10 @@
 
 namespace CallMe\WebBundle\Entity;
 
+use Symfony\Component\Security\Core\User\EquatableInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-class User implements UserInterface, \Serializable
+class User implements UserInterface, \Serializable, EquatableInterface
 {
     /** @var int */
     protected $id;
@@ -175,5 +176,14 @@ class User implements UserInterface, \Serializable
         $this->lastName = $data['last_name'];
         $this->email = $data['email'];
         $this->salt = '';
+    }
+
+    /**
+     * @param UserInterface $user
+     * @return bool
+     */
+    public function isEqualTo(UserInterface $user)
+    {
+        return $this->id === $user->getId();
     }
 }

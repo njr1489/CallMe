@@ -21,7 +21,6 @@ security:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
-
         secured_area:
             pattern: ^/
             anonymous: ~
@@ -35,5 +34,5 @@ security:
                 target: /
 
     access_control:
-        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/login, access: "isAnonymous()" }
+        - { path: ^/register, access: "isAnonymous()" }
