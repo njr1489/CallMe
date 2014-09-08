@@ -1,11 +1,4 @@
 <?php
-/**
- * Created by JetBrains PhpStorm.
- * User: adamc
- * Date: 6/7/14
- * Time: 12:42 PM
- * To change this template use File | Settings | File Templates.
- */
 
 namespace CallMe\WebBundle\Controller;
 
@@ -16,7 +9,10 @@ use Symfony\Component\Security\Core\SecurityContextInterface;
 
 class SecurityController extends Controller
 {
-
+    /**
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function loginAction(Request $request)
     {
         $session = $request->getSession();
