@@ -12,7 +12,7 @@ class Version2 extends AbstractMigration
 {
     public function up(Schema $schema)
     {
-        $this->addSql("ALTER TABLE users ADD COLUMN password_reset_token VARCHAR(36) DEFAULT NULL");
+        $this->addSql("ALTER TABLE users ADD COLUMN password_reset_token VARCHAR(32) DEFAULT NULL");
         $this->addSql("ALTER TABLE users ADD COLUMN password_reset_expiration_date DATETIME DEFAULT '0000-00-00 00:00:00' NOT NULL");
     }
 

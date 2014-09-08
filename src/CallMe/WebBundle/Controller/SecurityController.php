@@ -64,7 +64,19 @@ class SecurityController extends Controller
         $email = $request->request->get('email');
         try {
             $this->get('user_manager')->loadUserByUsername($email);
-            // @TODO: Reset password logic
+            $token = $this->get('user_manager')->generateResetPasswordToken($email);
+
+            $message = \Swift_Message::newInstance()
+                ->setSubject('Password Reset Request')
+                ->setFrom($this->container->getParameter('staff_email'))
+                ->setTo($email)
+                ->setContentType('text/html')
+                ->setBody($this->renderView(
+                    'CallMeWebBundle:Email:reset-password.html.twig',
+                    ['email' => md5($email), 'token' => $token]
+                ));
+            $this->get('mailer')->send($message);
+
             $this->get('session')->getFlashBag()->add(
                 'email',
                 'Email has been sent to ' . $email
@@ -79,5 +91,32 @@ class SecurityController extends Controller
 
             return $this->redirect($this->generateUrl('forgot_password'));
         }
+    }
+
+    /**
+     * @param $token
+     * @param $email
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function resetPasswordAction($token, $email)
+    {
+        try {
+            $user = $this->get('user_manager')->loadUserByResetPasswordToken($token);
+            if ($email != md5($user->getEmail())) {
+                return $this->redirect($this->generateUrl('login'));
+            }
+
+            return $this->render('CallMeWebBundle:Security:reset-password.html.twig', ['token' => $token]);
+        } catch (UsernameNotFoundException $e) {
+            return $this->redirect($this->generateUrl('login'));
+        }
+    }
+
+    /**
+     * @param Request $request
+     */
+    public function processResetPassword(Request $request)
+    {
+
     }
 }
