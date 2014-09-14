@@ -30,7 +30,7 @@ process_forgot_password:
     methods: [POST]
 
 reset_password:
-    pattern: /reset-password/{token}/{email}
+    pattern: /reset-password/{token}/{hashedEmail}
     defaults: {_controller: CallMeWebBundle:Security:resetPassword }
     methods: [GET]
 

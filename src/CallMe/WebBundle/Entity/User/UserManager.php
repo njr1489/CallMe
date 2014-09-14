@@ -86,6 +86,19 @@ class UserManager extends AbstractManager implements UserProviderInterface
     }
 
     /**
+     * @param User $user
+     * @param $password
+     */
+    public function resetUserPassword(User $user, $password)
+    {
+        $user->setPassword($password);
+        $statement = $this->db->prepare('UPDATE users SET password = :password WHERE email = :email');
+        $statement->bindValue('email', $user->getEmail());
+        $statement->bindValue('password', $user->getPassword());
+        $statement->execute();
+    }
+
+    /**
      * @param string $email
      * @return string
      */
@@ -129,12 +142,12 @@ class UserManager extends AbstractManager implements UserProviderInterface
      */
     public function loadUserByResetPasswordToken($token)
     {
-        $statement = $this->db->prepare('SELECT * Fromusers WHERE password_reset_token = :token');
+        $statement = $this->db->prepare('SELECT * FROM users WHERE password_reset_token = :token');
         $statement->bindValue('token', $token);
         $statement->execute();
 
         if (!$data = $statement->fetch(\PDO::FETCH_ASSOC)) {
-            throw new UsernameNotFoundException(sprintf('Username "%s" does not exist.', $username));
+            throw new UsernameNotFoundException(sprintf('Username "%s" does not exist.', $token));
         }
 
         $data['encode_password'] = false;

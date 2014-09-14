@@ -11,6 +11,11 @@
                     {{ flashMessage }}
                 </div>
             {% endfor %}
+            {% for flashMessage in app.session.flashbag.get('password') %}
+                <div class="flash-notice">
+                    {{ flashMessage }}
+                </div>
+            {% endfor %}
             <div class="form-group">
                 <label for="username">Username:</label>
                 <input class="form-control" type="text" id="username" name="_username" value="{{ last_username }}" />

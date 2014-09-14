@@ -25,16 +25,24 @@ class User implements UserInterface, \Serializable, EquatableInterface
     /** @var string */
     protected $salt = '';
 
+    /** @var string */
+    protected $passwordResetToken;
+
+    /** @var \DateTime */
+    protected $passwordResetExpiration;
+
     /**
      * @param int $id
      * @param $firstName
      * @param $lastName
      * @param $email
      * @param $password
-     * @param $encodePassword
-     * @throws \InvalidArgumentException
+     * @param bool $encodePassword
+     * @param null $passwordResetToken
+     * @param \DateTime $passwordResetExpiration
+     *  @throws \InvalidArgumentException
      */
-    public function __construct($id, $firstName, $lastName, $email, $password, $encodePassword = true)
+    public function __construct($id, $firstName, $lastName, $email, $password, $encodePassword = true, $passwordResetToken = null, \DateTime $passwordResetExpiration = null)
     {
         $this->id = $id;
 
@@ -57,6 +65,10 @@ class User implements UserInterface, \Serializable, EquatableInterface
             throw new \InvalidArgumentException('The password must be five characters long');
         }
         $this->setPassword($password, $encodePassword);
+
+        $this->passwordResetToken = $passwordResetToken;
+
+        $this->passwordResetExpiration = $passwordResetExpiration;
     }
 
     /**
@@ -111,7 +123,7 @@ class User implements UserInterface, \Serializable, EquatableInterface
      * @param $password
      * @param bool $encodePassword
      */
-    protected function setPassword($password, $encodePassword = true)
+    public function setPassword($password, $encodePassword = true)
     {
         if ($encodePassword) {
             $password = password_hash($password, PASSWORD_DEFAULT);
@@ -143,6 +155,21 @@ class User implements UserInterface, \Serializable, EquatableInterface
         return $this->email;
     }
 
+    /**
+     * @return string
+     */
+    public function getPasswordResetToken()
+    {
+        return $this->passwordResetToken;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getPasswordResetExpiration()
+    {
+        return $this->passwordResetExpiration;
+    }
     /**
      * @inheritDoc
      */

@@ -18,7 +18,9 @@ class UserFactory
             $params['last_name'],
             $params['email'],
             $params['password'],
-            isset($params['encode_password']) ? $params['encode_password'] : true
+            isset($params['encode_password']) ? $params['encode_password'] : true,
+            $params['password_reset_token'],
+            new \DateTime($params['password_reset_expiration_date'])
         );
     }
 }

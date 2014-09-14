@@ -88,18 +88,19 @@ class SecurityController extends Controller
 
     /**
      * @param $token
-     * @param $email
+     * @param $hashedEmail
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function resetPasswordAction($token, $email)
+    public function resetPasswordAction($token, $hashedEmail)
     {
         try {
             $user = $this->get('user_manager')->loadUserByResetPasswordToken($token);
-            if ($email != md5($user->getEmail())) {
+            $expiration = $user->getPasswordResetExpiration();
+            if ($hashedEmail != md5($user->getEmail()) || ($expiration && new \DateTime() > $expiration)) {
                 return $this->redirect($this->generateUrl('login'));
             }
 
-            return $this->render('CallMeWebBundle:Security:reset-password.html.twig', ['token' => $token]);
+            return $this->render('CallMeWebBundle:Security:reset-password.html.twig', ['token' => $token, 'hashedEmail' => $hashedEmail]);
         } catch (UsernameNotFoundException $e) {
             return $this->redirect($this->generateUrl('login'));
         }
@@ -107,9 +108,26 @@ class SecurityController extends Controller
 
     /**
      * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function processResetPassword(Request $request)
+    public function processResetPasswordAction(Request $request)
     {
+        if ($request->get('password') != $request->get('confirm_password')) {
+            $this->get('session')->getFlashBag()->add('password', 'Please confirm password and confirm password are the same.');
+            return $this->redirect($this->generateUrl('reset_password', ['token' => $request->get('token'), 'hashedEmail' => $request->get('hashedEmail')]));
+        }
 
+        try {
+            $user = $this->get('user_manager')->loadUserByResetPasswordToken($request->get('token'));
+            $expiration = $user->getPasswordResetExpiration();
+            if ($request->get('hashedEmail') != md5($user->getEmail()) || ($expiration && new \DateTime() > $expiration)) {
+                return $this->redirect($this->generateUrl('login'));
+            }
+            $this->get('user_manager')->resetUserPassword($user, $request->get('password'));
+            $this->get('session')->getFlashBag()->add('password', 'Password was successfully reset.');
+        } catch (UsernameNotFoundException $e) {
+        }
+
+        return $this->redirect($this->generateUrl('login'));
     }
 }

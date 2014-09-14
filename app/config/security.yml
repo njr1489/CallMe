@@ -36,3 +36,5 @@ security:
     access_control:
         - { path: ^/login, access: "isAnonymous()" }
         - { path: ^/register, access: "isAnonymous()" }
+        - { path: ^/forgot-password, access: "isAnonymous()" }
+        - { path: ^/reset-password, access: "isAnonymous()" }
