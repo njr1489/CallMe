@@ -43,6 +43,9 @@ class SecurityController extends Controller
         );
     }
 
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function forgotPasswordAction()
     {
         return $this->render('CallMeWebBundle:Security:forgot-password.html.twig');
