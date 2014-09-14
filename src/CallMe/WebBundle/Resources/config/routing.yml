@@ -20,6 +20,25 @@ login_check:
 logout:
     pattern: /logout
 
+forgot_password:
+    pattern: /forgot-password
+    defaults: { _controller: CallMeWebBundle:Security:forgotPassword }
+
+process_forgot_password:
+    pattern: /process-forgot-password
+    defaults: { _controller: CallMeWebBundle:Security:processForgotPassword }
+    methods: [POST]
+
+reset_password:
+    pattern: /reset-password/{token}/{hashedEmail}
+    defaults: {_controller: CallMeWebBundle:Security:resetPassword }
+    methods: [GET]
+
+process_reset_password:
+    pattern: /process-reset-password
+    defaults: {_controller: CallMeWebBundle:Security:processResetPassword }
+    methods: [POST]
+
 user_settings:
    pattern: /settings
    defaults: { _controller: CallMeWebBundle:User:settings }
