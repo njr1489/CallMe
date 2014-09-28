@@ -1,7 +1,8 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
+        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "This file is @generated automatically"
     ],
     "hash": "750e9b9421722843f92eacc319af2c02",
     "packages": [
@@ -2287,12 +2288,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/squizlabs/PHP_CodeSniffer.git",
-                "reference": "0e1d9297c4bb20875b182971814287cef5846d10"
+                "reference": "649f7541476979e78a68e9068c842c1452b58fc4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/0e1d9297c4bb20875b182971814287cef5846d10",
-                "reference": "0e1d9297c4bb20875b182971814287cef5846d10",
+                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/649f7541476979e78a68e9068c842c1452b58fc4",
+                "reference": "649f7541476979e78a68e9068c842c1452b58fc4",
                 "shasum": ""
             },
             "require": {
@@ -2354,7 +2355,7 @@
                 "phpcs",
                 "standards"
             ],
-            "time": "2014-09-05 00:01:49"
+            "time": "2014-09-08 04:43:22"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -2870,6 +2871,7 @@
         "squizlabs/php_codesniffer": 20,
         "doctrine/doctrine-migrations-bundle": 20
     },
+    "prefer-stable": false,
     "platform": {
         "php": ">=5.3.3"
     },

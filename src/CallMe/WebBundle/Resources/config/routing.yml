@@ -48,3 +48,13 @@ process_user_settings:
    pattern: /process-user-settings
    defaults: { _controller: CallMeWebBundle:User:processSettings }
    methods: [POST]
+
+audio_index:
+    pattern: /audio
+    defaults: { _controller: CallMeWebBundle:Audio:index }
+    methods: [GET]
+
+audio_upload:
+    pattern: /audio/upload
+    defaults: { _controller: CallMeWebBundle:Audio:uploadAudio }
+    methods: [POST]
