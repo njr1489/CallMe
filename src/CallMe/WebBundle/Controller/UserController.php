@@ -7,6 +7,9 @@ use Symfony\Component\HttpFoundation\Request;
 
 class UserController extends Controller
 {
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function settingsAction()
     {
         $user = $this->getUser();

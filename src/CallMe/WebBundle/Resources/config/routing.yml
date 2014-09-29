@@ -31,12 +31,12 @@ process_forgot_password:
 
 reset_password:
     pattern: /reset-password/{token}/{hashedEmail}
-    defaults: {_controller: CallMeWebBundle:Security:resetPassword }
+    defaults: { _controller: CallMeWebBundle:Security:resetPassword }
     methods: [GET]
 
 process_reset_password:
     pattern: /process-reset-password
-    defaults: {_controller: CallMeWebBundle:Security:processResetPassword }
+    defaults: { _controller: CallMeWebBundle:Security:processResetPassword }
     methods: [POST]
 
 user_settings:
