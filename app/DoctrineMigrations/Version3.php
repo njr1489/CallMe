@@ -24,7 +24,9 @@ class Version3 extends AbstractMigration
             updated_at DATETIME DEFAULT '0000-00-00 00:00:00' NOT NULL,
             name VARCHAR(25) NOT NULL,
             file_path varchar(50) NOT NULL,
-            INDEX (id, user_id),
+            INDEX (id),
+            INDEX (user_id),
+            UNIQUE (uuid),
             FOREIGN KEY (user_id)
                 REFERENCES users(id)
         )");
