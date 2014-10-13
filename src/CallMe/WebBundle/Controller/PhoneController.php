@@ -2,6 +2,7 @@
 
 namespace CallMe\WebBundle\Controller;
 
+use Doctrine\Tests\Common\Annotations\Null;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -37,9 +38,23 @@ class PhoneController extends Controller
     public function processCallBackAction(Request $request)
     {
         $response = new Response();
-        $response->headers->set('Content-Type', 'text/xml');
+        $response->headers->set('Content-Type', 'text/xml', Null);
         return $this->render(
             'CallMeWebBundle:Phone:callback.xml.twig',
+            ['number' => $request->request->get('number')],
+            $response
+        );
+    }
+
+    /**
+     * @param Request $request
+     * @return Response
+     */
+    public function processMessageAction (Request $request)
+    {
+        $response = new Response();
+        $response->headers->set('Content-Type', 'text/xml', Null);
+        return $this->render('CallMeWebBundle:Phone:message.xml.twig',
             ['number' => $request->request->get('number')],
             $response
         );

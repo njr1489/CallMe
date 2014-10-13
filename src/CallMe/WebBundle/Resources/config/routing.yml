@@ -64,3 +64,7 @@ dial_callback:
     defaults: { _controller: CallMeWebBundle:Phone:processCallBack }
     methods:
 
+dial_message:
+    pattern: /phone/demo/message
+    defaults: { _controller: CallMeWebBundle:Phone:processMessage }
+    methods:
