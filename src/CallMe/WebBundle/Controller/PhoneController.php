@@ -1,8 +1,5 @@
 <?php
 
-namespace CallMe\WebBundle\Controller;
-
-use Doctrine\Tests\Common\Annotations\Null;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,9 +23,9 @@ class PhoneController extends Controller
         $this->get('twilio')->account->calls->create(
             '5704563355',
              $number,
-            $this->generateUrl('dial_callback')
+            $this->generateUrl('dial_callback', [], true)
         );
-        $this->redirect($this->generateUrl('make_call'));
+        return $this->redirect($this->generateUrl('make_call'));
     }
 
     /**
@@ -38,7 +35,7 @@ class PhoneController extends Controller
     public function processCallBackAction(Request $request)
     {
         $response = new Response();
-        $response->headers->set('Content-Type', 'text/xml', Null);
+        $response->headers->set('Content-Type', 'text/xml');
         return $this->render(
             'CallMeWebBundle:Phone:callback.xml.twig',
             ['number' => $request->request->get('number')],
@@ -53,7 +50,7 @@ class PhoneController extends Controller
     public function processMessageAction (Request $request)
     {
         $response = new Response();
-        $response->headers->set('Content-Type', 'text/xml', Null);
+        $response->headers->set('Content-Type', 'text/xml');
         return $this->render('CallMeWebBundle:Phone:message.xml.twig',
             ['number' => $request->request->get('number')],
             $response
