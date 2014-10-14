@@ -24,7 +24,8 @@
         "squizlabs/php_codesniffer": "dev-master",
         "aws/aws-sdk-php": "2.6.7",
         "doctrine/doctrine-migrations-bundle": "2.1.*@dev",
-        "jms/security-extra-bundle": "1.5.1"
+        "jms/security-extra-bundle": "1.5.1",
+        "twilio/sdk": "3.12.6"
 
     },
     "scripts": {

@@ -48,3 +48,23 @@ process_user_settings:
    pattern: /process-user-settings
    defaults: { _controller: CallMeWebBundle:User:processSettings }
    methods: [POST]
+
+make_call:
+    pattern: /phone/demo
+    defaults: { _controller: CallMeWebBundle:Phone:call }
+    methods: [GET]
+
+dial_call:
+    pattern: /phone/demo/call
+    defaults: { _controller: CallMeWebBundle:Phone:processCall }
+    methods: [POST]
+
+dial_callback:
+    pattern: /phone/demo/callback
+    defaults: { _controller: CallMeWebBundle:Phone:processCallBack }
+    methods:
+
+dial_message:
+    pattern: /phone/demo/message
+    defaults: { _controller: CallMeWebBundle:Phone:processMessage }
+    methods:
