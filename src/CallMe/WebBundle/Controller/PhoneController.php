@@ -23,11 +23,20 @@ class PhoneController extends Controller
     public function processCallAction(Request $request)
     {
         $number = $request->request->get('number');
-        $this->get('twilio')->account->calls->create(
-            $this->container->getParameter('twilio_number'),
-            $number,
-            $this->generateUrl('dial_callback', [], true)
-        );
+        try {
+            $this->get('twilio')->account->calls->create(
+                $this->container->getParameter('twilio_number'),
+                $number,
+                $this->generateUrl('dial_callback', [], true)
+            );
+        } catch (\Services_Twilio_RestException $e) {
+            $this->get('logger')->error($e->getMessage());
+            $this->get('session')->getFlashBag()->add(
+                'twilio',
+                'An error occured during this operation'
+            );
+
+        }
         return $this->redirect($this->generateUrl('make_call'));
     }
 
