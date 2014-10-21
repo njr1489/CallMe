@@ -38,9 +38,15 @@ class UploadAudio
      * @param $audioFile
      * @param User $user
      * @return Audio
+     * @throws \InvalidArgumentException
      */
     public function uploadAudio($name, $audioFile, User $user)
     {
+        $fileInfo = new finfo();
+        if ($fileInfo->file($audioFile) != 'audio/x-mpeg-3') {
+            throw new \InvalidArgumentException('Audio file is not an mp3');
+        }
+
         if (!$this->s3Client->doesBucketExist($user->getEmail())) {
             $this->s3Client->createBucket(['Bucket' => $user->getEmail()]);
         }
@@ -51,8 +57,6 @@ class UploadAudio
             'SourceFile'   => $audioFile,
             'ContentType'  => 'audio/x-mpeg-3'
         ]);
-
-        //@TODO handle when response fails
 
         return $this->audioManager->createRecord($user, $name, $response['ObjectUrl']);
     }
