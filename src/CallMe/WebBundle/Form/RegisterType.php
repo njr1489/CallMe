@@ -77,4 +77,4 @@ class RegisterType extends AbstractType
             'intention' => 'register'
         ));
     }
-} 
+}
