@@ -23,6 +23,11 @@ class Audio {
     protected $uuid;
 
     /**
+     * @var
+     */
+    protected $user;
+
+    /**
      * @var string
      */
     protected $name;
@@ -45,15 +50,17 @@ class Audio {
     /**
      * @param $id
      * @param $uuid
+     * @param User $user
      * @param $name
      * @param $filePath
      * @param \DateTime $createdAt
      * @param \DateTime $updatedAt
      */
-    public function __construct($id, $uuid, $name, $filePath, \DateTime $createdAt, \DateTime $updatedAt)
+    public function __construct($id, $uuid, User $user, $name, $filePath, \DateTime $createdAt, \DateTime $updatedAt)
     {
         $this->id = $id;
         $this->uuid = $uuid;
+        $this->user = $user;
         $this->name = $name;
         $this->filePath = $filePath;
         $this->createdAt = $createdAt;
@@ -82,6 +89,14 @@ class Audio {
     public function getUuid()
     {
         return $this->uuid;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 
     /**

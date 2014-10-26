@@ -43,17 +43,19 @@ class UploadAudio
      */
     public function uploadAudio($name, $audioFile, User $user)
     {
-        $fileInfo = new finfo();
-        if ($fileInfo->file($audioFile) != 'audio/x-mpeg-3') {
+        $bucket = 'user-'.$user->getId();
+
+        $fileInfo = new \finfo(FILEINFO_MIME_TYPE);
+        if ($fileInfo->file($audioFile) != 'audio/mpeg') {
             throw new \InvalidArgumentException('Audio file is not an mp3');
         }
 
-        if (!$this->s3Client->doesBucketExist($user->getEmail())) {
-            $this->s3Client->createBucket(['Bucket' => $user->getEmail()]);
+        if (!$this->s3Client->doesBucketExist($bucket)) {
+            $this->s3Client->createBucket(['Bucket' => $bucket]);
         }
 
         $response = $this->s3Client->putObject([
-            'Bucket'       => $user->getEmail(),
+            'Bucket'       => $bucket,
             'Key'          => $name, // @TODO: Figure out randomized name
             'SourceFile'   => $audioFile,
             'ContentType'  => 'audio/x-mpeg-3'

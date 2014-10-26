@@ -2,7 +2,7 @@
 
 {% block content %}
     <div class="col-md-4 col-md-offset-4">
-        <form action="{{ path('audio_upload') }}" method="post">
+        <form action="{{ path('audio_upload') }}" method="post" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="name">Name</label>
                 <input class="form-control" type="text" name="name" id="name" />

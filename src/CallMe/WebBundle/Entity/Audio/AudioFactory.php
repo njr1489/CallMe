@@ -22,10 +22,11 @@ class AudioFactory {
         return new Audio(
             isset($data['id']) ? $data['id'] : null,
             $data['uuid'],
+            $data['user'],
             $data['name'],
             $data['file_path'],
-            new \DateTime($data['created_at']),
-            new \DateTime($data['updated_at'])
+            $data['created_at'],
+            $data['updated_at']
         );
     }
 }

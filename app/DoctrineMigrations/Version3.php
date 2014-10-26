@@ -34,7 +34,6 @@ class Version3 extends AbstractMigration
 
     public function down(Schema $schema)
     {
-        $this->addSql("DROP INDEX audio_index ON audio");
         $this->addSql("DROP TABLE audio");
     }
 }
