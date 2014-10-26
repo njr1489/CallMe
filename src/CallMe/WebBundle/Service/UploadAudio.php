@@ -11,6 +11,7 @@ namespace CallMe\WebBundle\Service;
 
 use Aws\S3\S3Client;
 use CallMe\WebBundle\Entity\User;
+use CallMe\WebBundle\Entity\Audio\AudioManager;
 
 class UploadAudio
 {
@@ -58,6 +59,6 @@ class UploadAudio
             'ContentType'  => 'audio/x-mpeg-3'
         ]);
 
-        return $this->audioManager->createRecord($user, $name, $response['ObjectUrl']);
+        return $this->audioManager->createAudio($user, $name, $response['ObjectUrl']);
     }
 }

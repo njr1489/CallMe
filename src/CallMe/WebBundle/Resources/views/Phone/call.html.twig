@@ -1,0 +1,23 @@
+{% extends "CallMeWebBundle::layout.html.twig" %}
+
+{% block content %}
+
+<div class="col-md-4 col-md-offset-4">
+    <form action="{{ path('dial_call') }}" method="post">
+        {% for flashMessage in app.session.flashbag.get('twilio') %}
+            <div class="flash-notice">
+                {{ flashMessage }}
+            </div>
+        {% endfor %}
+        <div class="form-group">
+            <label for="Number">Number:</label>
+            <input class="form-control" type="text" id="number" name="number" value="" />
+        </div>
+
+        <div>
+            <button type="submit" class="btn btn-info">dial</button>
+            <button type="submit" class="btn btn-info">message</button>
+        </div>
+    </form>
+</div>
+{% endblock %}
