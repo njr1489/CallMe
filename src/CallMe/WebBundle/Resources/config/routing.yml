@@ -49,6 +49,16 @@ process_user_settings:
    defaults: { _controller: CallMeWebBundle:User:processSettings }
    methods: [POST]
 
+audio_index:
+    pattern: /audio
+    defaults: { _controller: CallMeWebBundle:Audio:index }
+    methods: [GET]
+
+audio_upload:
+    pattern: /audio/upload
+    defaults: { _controller: CallMeWebBundle:Audio:uploadAudio }
+    methods: [POST]
+
 make_call:
     pattern: /phone/demo
     defaults: { _controller: CallMeWebBundle:Phone:call }
@@ -68,3 +78,4 @@ dial_message:
     pattern: /phone/demo/message
     defaults: { _controller: CallMeWebBundle:Phone:processMessage }
     methods:
+

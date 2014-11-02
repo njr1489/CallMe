@@ -21,3 +21,15 @@ services:
     twilio:
         class: Services_Twilio
         arguments: [%twilio_sid%, %twilio_token%]
+
+    audio_factory:
+        class: CallMe\WebBundle\Entity\Audio\AudioFactory
+
+    audio_manager:
+        class: CallMe\WebBundle\Entity\Audio\AudioManager
+        arguments: [@db, @audio_factory]
+
+    audio_uploader:
+        class: CallMe\WebBundle\Service\UploadAudio
+        arguments: [@audio_manager, @s3]
+
