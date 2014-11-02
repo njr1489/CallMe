@@ -9,7 +9,6 @@
 
 namespace CallMe\WebBundle\Entity;
 
-
 class Audio
 {
 
@@ -24,7 +23,7 @@ class Audio
     protected $uuid;
 
     /**
-     * @var
+     * @var User
      */
     protected $user;
 
@@ -93,7 +92,7 @@ class Audio
     }
 
     /**
-     * @return mixed
+     * @return User
      */
     public function getUser()
     {
