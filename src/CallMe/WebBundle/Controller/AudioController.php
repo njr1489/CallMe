@@ -28,7 +28,13 @@ class AudioController extends Controller
     public function uploadAudioAction(Request $request)
     {
         $file = $request->files->get('file');
-        $this->get('audio_uploader')->uploadAudio($request->request->get('name'), $file->getPath().'/'.$file->getFilename(), $this->getUser());
+
+        try {
+            $this->get('audio_uploader')->uploadAudio($request->request->get('name'), $file->getPath().'/'.$file->getFilename(), $this->getUser());
+            $this->get('session')->getFlashBag()->add('notice', 'Your file was successfully uploaded.');
+        } catch (\InvalidArgumentException $e) {
+            $this->get('session')->getFlashBag()->add('notice', 'An error happened while you were trying to upload, please try again.');
+        }
         return $this->redirect($this->generateUrl('audio_index'));
     }
 }

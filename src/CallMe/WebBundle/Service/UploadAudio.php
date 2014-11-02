@@ -61,6 +61,6 @@ class UploadAudio
             'ContentType'  => 'audio/x-mpeg-3'
         ]);
 
-        return $this->audioManager->createAudio($user, $name, $response['ObjectUrl']);
+        return $this->audioManager->createAudio($user, $name, $response['ObjectURL']);
     }
 }

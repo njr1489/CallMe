@@ -10,7 +10,8 @@
 namespace CallMe\WebBundle\Entity;
 
 
-class Audio {
+class Audio
+{
 
     /**
      * @var int

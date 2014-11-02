@@ -11,7 +11,8 @@ namespace CallMe\WebBundle\Entity\Audio;
 
 use CallMe\WebBundle\Entity\Audio;
 
-class AudioFactory {
+class AudioFactory
+{
 
     /**
      * @param array $data

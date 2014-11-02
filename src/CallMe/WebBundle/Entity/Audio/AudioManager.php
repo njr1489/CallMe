@@ -68,7 +68,7 @@ class AudioManager extends AbstractManager
         $audio = $this->audioFactory->create($data);
 
         $statement = $this->db->prepare(
-            'INSERT INTO audio (uuid, user_id, name, file_path, created_at, updated_at)
+            'INSERT INTO audio (uuid, user_id, `name`, file_path, created_at, updated_at)
             VALUES (:uuid, :user_id, :name, :file_path, :created_at, :updated_at)'
         );
         $statement->bindValue('uuid', $audio->getUuid());
@@ -82,5 +82,4 @@ class AudioManager extends AbstractManager
 
         return $audio;
     }
-
 }
