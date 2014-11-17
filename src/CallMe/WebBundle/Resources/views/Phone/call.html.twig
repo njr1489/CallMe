@@ -4,19 +4,17 @@
 
 <div class="col-md-4 col-md-offset-4">
     <form action="{{ path('dial_call') }}" method="post">
-        {% for flashMessage in app.session.flashbag.get('twilio') %}
-            <div class="flash-notice">
-                {{ flashMessage }}
-            </div>
-        {% endfor %}
+
+        <div class="flash-notice hidden">
+        </div>
         <div class="form-group">
             <label for="Number">Number:</label>
             <input class="form-control" type="text" id="number" name="number" value="" />
         </div>
 
         <div>
-            <button type="submit" class="btn btn-info">dial</button>
-            <button type="submit" class="btn btn-info">message</button>
+            <button type="button" data-type="dial" class="btn btn-info btn-demo">dial</button>
+            <button type="button" data-type="message" class="btn btn-info btn-demo">message</button>
         </div>
     </form>
 </div>
@@ -26,7 +24,26 @@
     <script>
         require(['jquery'], function($) {
             $(document).ready(function() {
-                // code goes here
+                $('.btn-demo').click(function(e) {
+                    var number = $('#number');
+                    var type = $(this).attr('data-type');
+
+                    e.preventDefault();
+
+                    $.ajax({
+                        url: '{{ path('dial_call') }}',
+                        type: 'POST',
+                        data: {
+                            number: number.val(),
+                            type: type
+                        },
+                        success: function(data){
+                            $('.flash-notice').removeClass('hidden').html(data['message']);
+                        }
+                    });
+                });
+
+
             });
         });
     </script>

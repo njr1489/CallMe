@@ -3,6 +3,7 @@
 namespace CallMe\WebBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -23,21 +24,31 @@ class PhoneController extends Controller
     public function processCallAction(Request $request)
     {
         $number = $request->request->get('number');
+        $type = $request->request->get('type');
         try {
-            $this->get('twilio')->account->calls->create(
-                $this->container->getParameter('twilio_number'),
-                $number,
-                $this->generateUrl('dial_callback', [], true)
-            );
+
+            if ($type == 'dial' ){
+                $this->get('twilio')->account->calls->create(
+                    $this->container->getParameter('twilio_number'),
+                    $number,
+                    $this->generateUrl('dial_callback', [], true)
+
+                );
+                $message = 'Your phone call has been sent.';
+            } else if ($type == 'message') {
+                $this->get('twilio')->account->messages->sendMessage(
+                    $this->container->getParameter('twilio_number'),
+                    $number,
+                    'test'
+                );
+                $message = 'Your message has been sent';
+
+            }
         } catch (\Services_Twilio_RestException $e) {
             $this->get('logger')->error($e->getMessage());
-            $this->get('session')->getFlashBag()->add(
-                'twilio',
-                'An error occured during this operation'
-            );
-
+                $message = 'An error occurred during this operation';
         }
-        return $this->redirect($this->generateUrl('make_call'));
+        return new JsonResponse(['message' => $message]);
     }
 
     /**
