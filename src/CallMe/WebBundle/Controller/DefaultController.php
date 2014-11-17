@@ -2,6 +2,7 @@
 
 namespace CallMe\WebBundle\Controller;
 
+use CallMe\WebBundle\Entity\Audio\AudioManager;
 use CallMe\WebBundle\Entity\User;
 use CallMe\WebBundle\Form\RegisterType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -14,6 +15,9 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
+        if ($this->get('security.context')->isGranted('ROLE_USER')) {
+          return $this->redirect($this->generateUrl('dashboard_index'));
+        }
         return $this->render('CallMeWebBundle:Default:index.html.twig');
     }
 
@@ -41,4 +45,15 @@ class DefaultController extends Controller
 
         return $this->redirect($this->generateUrl('register_page'));
     }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function dashboardAction()
+    {
+        return $this->render('CallMeWebBundle:Dashboard:dash.html.twig', [
+            'audio' => $this->get('audio_manager')->fetchAudioByUser($this->getUser())
+        ]);
+    }
+
 }

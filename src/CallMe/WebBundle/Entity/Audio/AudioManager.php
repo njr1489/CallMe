@@ -10,6 +10,7 @@
 namespace CallMe\WebBundle\Entity\Audio;
 
 use CallMe\WebBundle\Entity\Audio;
+use CallMe\WebBundle\Entity\User;
 use CallMe\WebBundle\Core\AbstractManager;
 use \Rhumsaa\Uuid\Uuid;
 
@@ -54,7 +55,7 @@ class AudioManager extends AbstractManager
      * @param $filePath
      * @return Audio
      */
-    public function createAudio($user, $name, $filePath)
+    public function createAudio(User $user, $name, $filePath)
     {
         $dateTime = new \DateTime();
         $data = [
@@ -81,5 +82,15 @@ class AudioManager extends AbstractManager
         $audio->setId($this->db->lastInsertId());
 
         return $audio;
+    }
+
+    public function fetchAudioByUser(User $user)
+    {
+        $statement = $this->db->prepare('SELECT * FROM audio WHERE user_id = :user');
+
+        $statement->bindValue('user', $user->getId());
+        $statement->execute();
+
+        return $statement->fetchAll(\PDO::FETCH_ASSOC);
     }
 }

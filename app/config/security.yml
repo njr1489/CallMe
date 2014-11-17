@@ -39,3 +39,4 @@ security:
         - { path: ^/forgot-password, access: "isAnonymous()" }
         - { path: ^/reset-password, access: "isAnonymous()" }
         - { path: ^/audio, roles: "ROLE_USER" }
+        - { path: ^/dashboard, roles: "ROLE_USER" }
