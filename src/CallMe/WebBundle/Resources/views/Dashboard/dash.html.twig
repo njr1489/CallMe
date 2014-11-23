@@ -1,17 +1,21 @@
 {% extends "CallMeWebBundle::layout.html.twig" %}
 
 {% block content %}
-    <div class="container">
-        {% for audioRow in audio %}
-            <li>{{ audioRow.name }}</li>
-            <li>{{ audioRow.created_at }}</li>
-        {% else %}
-            No phone calls have been made.
-            {{ dump(app.user) }}
-        {% endfor %}
-    </div>
-
-    <div class="col-md-4 col-md-offset-4">
-        <li><a href="{{ path('audio_index') }}">Audio</a></li>
+    <div class="row">
+        <table class="table table-striped">
+            <thead>
+                <th>Title</th>
+                <th>Time</th>
+            </thead>
+            {% for audioRow in audio %}
+                <tr>
+                    <td>{{ audioRow.name }}</td>
+                    <td>{{ audioRow.created_at|date("m/d/Y") }}</td>
+                </tr>
+            {% else %}
+                No phone calls have been made.
+                {{ dump(app.user) }}
+            {% endfor %}
+        </table>
     </div>
 {% endblock %}

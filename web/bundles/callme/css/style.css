@@ -25,3 +25,7 @@ footer {
 div.robotic {
     display:none;
 }
+
+div.layout {
+    padding-top: 50px;
+}

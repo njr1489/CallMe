@@ -16,7 +16,7 @@ class DefaultController extends Controller
     public function indexAction()
     {
         if ($this->get('security.context')->isGranted('ROLE_USER')) {
-          return $this->redirect($this->generateUrl('dashboard_index'));
+            return $this->redirect($this->generateUrl('dashboard_index'));
         }
         return $this->render('CallMeWebBundle:Default:index.html.twig');
     }
@@ -55,5 +55,4 @@ class DefaultController extends Controller
             'audio' => $this->get('audio_manager')->fetchAudioByUser($this->getUser())
         ]);
     }
-
 }
