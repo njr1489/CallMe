@@ -28,7 +28,7 @@ class PhoneController extends Controller
         $message = $request->request->get('message');
         try {
 
-            if ($type == 'dial'){
+            if ($type == 'dial') {
                 $this->get('twilio')->account->calls->create(
                     $this->container->getParameter('twilio_number'),
                     $number,
