@@ -25,6 +25,7 @@ class PhoneController extends Controller
     {
         $number = $request->request->get('number');
         $type = $request->request->get('type');
+        $message = $request->request->get('message');
         try {
 
             if ($type == 'dial' ){
@@ -39,7 +40,7 @@ class PhoneController extends Controller
                 $this->get('twilio')->account->messages->sendMessage(
                     $this->container->getParameter('twilio_number'),
                     $number,
-                    'test'
+                    $message
                 );
                 $message = 'Your message has been sent';
 

@@ -8,8 +8,13 @@
         <div class="flash-notice hidden">
         </div>
         <div class="form-group">
-            <label for="Number">Number:</label>
+            <label for="number">Number:</label>
             <input class="form-control" type="text" id="number" name="number" value="" />
+        </div>
+
+        <div class="form-group">
+            <label for="message">Message:</label>
+            <input class="form-control" type="text" id="message" name="message" value="" />
         </div>
 
         <div>
@@ -27,6 +32,8 @@
                 $('.btn-demo').click(function(e) {
                     var number = $('#number');
                     var type = $(this).attr('data-type');
+                    var message = $('#message');
+
 
                     e.preventDefault();
 
@@ -35,7 +42,8 @@
                         type: 'POST',
                         data: {
                             number: number.val(),
-                            type: type
+                            type: type,
+                            message: message.val()
                         },
                         success: function(data){
                             $('.flash-notice').removeClass('hidden').html(data['message']);
