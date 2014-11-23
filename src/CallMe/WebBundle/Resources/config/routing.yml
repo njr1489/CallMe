@@ -72,10 +72,14 @@ dial_call:
 dial_callback:
     pattern: /phone/demo/callback
     defaults: { _controller: CallMeWebBundle:Phone:processCallBack }
-    methods:
+    methods: [POST]
 
 dial_message:
     pattern: /phone/demo/message
     defaults: { _controller: CallMeWebBundle:Phone:processMessage }
-    methods:
+    methods: [POST]
 
+dashboard_index:
+    pattern: /dashboard
+    defaults: { _controller: CallMeWebBundle:Default:dashboard }
+    methods: [GET]

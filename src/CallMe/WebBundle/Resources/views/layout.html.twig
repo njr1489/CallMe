@@ -32,6 +32,7 @@
                             <li><a href="#services">Services</a></li>
                             <li><a href="#contact">Contact</a></li>
                             {% if app.user %}
+                                <li><a href="{{ path('audio_index') }}">Audio</a></li>
                                 <li><a href="{{ path('user_settings') }}">Settings</a></li>
                                 <li><a href="{{ path('logout') }}">Logout</a></li>
                             {% else %}
@@ -42,16 +43,14 @@
                 </div>
             </nav>
 
-            <div class="container">
+            <div class="container layout">
                 {% block content %}{% endblock %}
-                <footer>
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <p>Copyright &copy; CallMe 2013</p>
-                        </div>
-                    </div>
-                </footer>
             </div>
+            <footer>
+                <div class="row text-center">
+                    <p>Copyright &copy; CallMe 2013</p>
+                </div>
+            </footer>
         {% endblock %}
         <script src="/js/require-config.js"></script>
         <script src="http://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.15/require.min.js"></script>
