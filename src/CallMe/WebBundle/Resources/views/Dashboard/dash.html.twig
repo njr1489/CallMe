@@ -1,20 +1,23 @@
 {% extends "CallMeWebBundle::layout.html.twig" %}
 
 {% block content %}
+    <h2>DashBoard</h2>
     <div class="row">
-        <table class="table table-striped">
-            <thead>
-                <th>Title</th>
-                <th>Time</th>
-            </thead>
-            {% for audioRow in audio %}
-                <tr>
-                    <td>{{ audioRow.name }}</td>
-                    <td>{{ audioRow.created_at|date("m/d/Y") }}</td>
-                </tr>
-            {% else %}
-                No phone calls have been made.
-            {% endfor %}
-        </table>
+        {% if audio %}
+            <table class="table table-striped">
+                <thead>
+                    <th>Title</th>
+                    <th>Time</th>
+                </thead>
+                {% for audioRow in audio %}
+                    <tr>
+                        <td>{{ audioRow.name }}</td>
+                        <td>{{ audioRow.created_at|date("m/d/Y") }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            <p class="text-center">No phone calls have been made.</p>
+        {% endif %}
     </div>
 {% endblock %}
