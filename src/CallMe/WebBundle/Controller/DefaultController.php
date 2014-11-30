@@ -7,6 +7,7 @@ use CallMe\WebBundle\Entity\User;
 use CallMe\WebBundle\Form\RegisterType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
 class DefaultController extends Controller
 {
@@ -39,7 +40,10 @@ class DefaultController extends Controller
         $form->submit($request->request->all());
 
         if ($form->isValid()) {
-            $this->get('user_manager')->createUser($form->getData());
+            $newUser = $this->get('user_manager')->createUser($form->getData());
+
+            $token = new UsernamePasswordToken($newUser, null, 'main', $newUser->getRoles());
+            $this->get('security.context')->setToken($token);
             return $this->redirect($this->generateUrl('call_me_web_homepage'));
         }
 
