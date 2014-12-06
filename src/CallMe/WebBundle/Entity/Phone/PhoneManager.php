@@ -42,7 +42,7 @@ class PhoneManager extends AbstractManager
         return $phone;
     }
 
-    public function createPhoneCall(User $user, $name, $filePath, $delete = false)
+    public function createPhoneCall(User $user, $name, $filePath, $remove = false)
     {
         $dateTime = new \DateTime();
         $data = [
@@ -52,13 +52,13 @@ class PhoneManager extends AbstractManager
             'file_path' => $filePath,
             'created_at' => $dateTime,
             'updated_at' => $dateTime,
-            'delete' => $delete
+            'remove' => $remove
         ];
         $call = $this->phoneFactory->create($data);
 
         $statement = $this->db->prepare(
             'INSERT INTO phone (uuid, user_id, `name`, file_path, created_at, updated_at)
-            VALUES (:uuid, :user_id, :name, :file_path, :created_at, :updated_at, :$delete)'
+            VALUES (:uuid, :user_id, :name, :file_path, :created_at, :updated_at, :$remove)'
         );
         $statement->bindValue('uuid', $call->getUuid());
         //TODO getId is not showing up
@@ -67,7 +67,7 @@ class PhoneManager extends AbstractManager
         $statement->bindValue('file_path', $call->getFilePath());
         $statement->bindValue('created_at', $call->getCreatedAt()->format('Y-m-d h:i:s'));
         $statement->bindValue('updated_at', $call->getUpdatedAt()->format('Y-m-d h:i:s'));
-        $statement->bindValue('delete', $call->getDelete());
+        $statement->bindValue('remove', $call->getRemove());
         $statement->execute();
         $call->setId($this->db->lastInsertId());
 

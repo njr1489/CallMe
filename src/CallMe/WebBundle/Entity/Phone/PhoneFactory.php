@@ -20,7 +20,7 @@ class PhoneFactory
             $data['file_path'],
             $data['created_at'],
             $data['updated_at'],
-            $data['delete']
+            $data['remove']
         );
     }
 }

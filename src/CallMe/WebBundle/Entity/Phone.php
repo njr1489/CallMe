@@ -44,7 +44,7 @@ class Phone
     /**
      * @var boolean
      */
-    protected $delete;
+    protected $remove;
 
     /**
      * @param $id
@@ -54,9 +54,9 @@ class Phone
      * @param $filePath
      * @param $createAt
      * @param $updatedAt
-     * @param $delete
+     * @param $remove
      */
-    public function __construct($id, $uuid, User $user, $name, $filePath, $createAt, $updatedAt, $delete)
+    public function __construct($id, $uuid, User $user, $name, $filePath, $createAt, $updatedAt, $remove)
     {
         $this->id = $id;
         $this->uuid = $uuid;
@@ -65,7 +65,7 @@ class Phone
         $this->filePath = $filePath;
         $this->createdAt = $createAt;
         $this->updatedAt = $updatedAt;
-        $this->delete = $delete;
+        $this->remove = $remove;
     }
 
     /**
@@ -135,16 +135,16 @@ class Phone
     /**
      * @param boolean $delete
      */
-    public function setDelete($delete)
+    public function setRemove($delete)
     {
-        $this->delete = $delete;
+        $this->remove = $delete;
     }
 
     /**
      * @return boolean
      */
-    public function getDelete()
+    public function getRemove()
     {
-        return $this->delete;
+        return $this->remove;
     }
 }
