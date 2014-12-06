@@ -31,14 +31,7 @@ class Version4 extends AbstractManager
                 REFERENCES users(id)
         )");
 
-        $this->addSql("CREATE TRIGGER populate_phone_user
-            BEFORE INSERT ON phone_user
-            FOR EACH ROW
-            BEGIN
-                INSERT INTO phone_user (user_id, phone_id)
-                VALUES (NEW.user_id, NEW.id);
-            END;
-            ");
+        //TODO trigger ?
 
         $this->addSqll("CREATE TABLE phone_user(
             id int PRIMARY KEY AUTO_INCREMENT,
