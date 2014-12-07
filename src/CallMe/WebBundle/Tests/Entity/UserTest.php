@@ -11,10 +11,17 @@ class UserTest extends \PHPUnit_Framework_TestCase
      */
     protected $user;
 
+    /**
+     * @var DateTime
+     */
+    protected $dateTime;
+
     protected function setUp()
     {
-        $this->user = new User(1, 'Walter', 'Bermudez', 'WB@hotmail.com', 'password');
+        $this->dateTime = new \DateTime('+2 days');
+        $this->user = new User(1, 'Walter', 'Bermudez', 'WB@hotmail.com', 'password', true, '9496ktg', $this->dateTime);
     }
+
     public function testGetId()
     {
         $this-> assertEquals(1, $this->user->getId());
@@ -45,5 +52,41 @@ class UserTest extends \PHPUnit_Framework_TestCase
     public function testGetPassword()
     {
         $this->assertTrue(password_verify('password', $this->user->getPassword()));
+    }
+
+    public function testSetPassword()
+    {
+        $this->user->setPassword('password');
+        $this->assertTrue(password_verify('password', $this->user->getPassword()));
+    }
+
+    public function testGetRoles()
+    {
+        $this->assertEquals(['ROLE_USER'], $this->user->getRoles());
+    }
+
+    public function testGetSalt()
+    {
+        $this->assertEmpty($this->user->getSalt());
+    }
+
+    public function testGetUsername()
+    {
+        $this->assertEquals('WB@hotmail.com', $this->user->getEmail());
+    }
+
+    public function testGetPasswordResetToken()
+    {
+        $this->assertEquals('9496ktg', $this->user->getPasswordResetToken());
+    }
+
+    public function testGetPasswordResetExpiration()
+    {
+        $this->assertEquals($this->dateTime, $this->user->getPasswordResetExpiration());
+    }
+
+    public function testSerialize()
+    {
+        $this->assertEquals(serialize(['id'=>1, 'first_name'=>'Walter', 'last_name'=>'Bermudez', 'email'=>'WB@hotmail.com', 'salt'=>'']), $this->user->serialize());
     }
 }
