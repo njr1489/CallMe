@@ -2,9 +2,7 @@
 
 namespace CallMe\WebBundle\Entity;
 
-use Symfony\Bridge\Doctrine\Tests\Fixtures\User;
-
-class Phone
+class PhoneCall
 {
     /**
      * @var int
@@ -27,11 +25,6 @@ class Phone
     protected $name;
 
     /**
-     * @var string
-     */
-    protected $filePath;
-
-    /**
      * @var \DateTime
      */
     protected $createdAt;
@@ -44,28 +37,30 @@ class Phone
     /**
      * @var boolean
      */
-    protected $remove;
+    protected $isActive;
 
     /**
      * @param $id
      * @param $uuid
      * @param User $user
      * @param $name
-     * @param $filePath
-     * @param $createAt
-     * @param $updatedAt
-     * @param $remove
+     * @param \DateTime $createAt
+     * @param \DateTime $updatedAt
+     * @param $isActive
      */
-    public function __construct($id, $uuid, User $user, $name, $filePath, $createAt, $updatedAt, $remove)
+    public function __construct($id, $uuid, User $user, $name,\DateTime $createAt,\DateTime $updatedAt, $isActive)
     {
+        if ( count($name) > 50 ) {
+            throw new Exception('User name is greater than 50 characters');
+        }
+
         $this->id = $id;
         $this->uuid = $uuid;
         $this->user = $user;
         $this->name = $name;
-        $this->filePath = $filePath;
         $this->createdAt = $createAt;
         $this->updatedAt = $updatedAt;
-        $this->remove = $remove;
+        $this->isActive = $isActive;
     }
 
     /**
@@ -109,14 +104,6 @@ class Phone
     }
 
     /**
-     * @return string
-     */
-    public function getFilePath()
-    {
-        return $this->filePath;
-    }
-
-    /**
      * @return \DateTime
      */
     public function getCreatedAt()
@@ -135,16 +122,8 @@ class Phone
     /**
      * @param boolean $delete
      */
-    public function setRemove($delete)
+    public function isDeleted($delete)
     {
-        $this->remove = $delete;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function getRemove()
-    {
-        return $this->remove;
+        $this->isActive = $delete;
     }
 }

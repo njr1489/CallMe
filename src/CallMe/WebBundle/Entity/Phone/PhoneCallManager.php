@@ -3,22 +3,22 @@
 namespace CallMe\WebBundle\Entity\Phone;
 
 use CallMe\WebBundle\Core\AbstractManager;
-use CallMe\WebBundle\Entity\Phone;
+use CallMe\WebBundle\Entity\PhoneCall;
 use CallMe\WebBundle\Entity\User;
 use Rhumsaa\Uuid\Uuid;
 
-class PhoneManager extends AbstractManager
+class PhoneCallManager extends AbstractManager
 {
     /**
-     * @var PhoneFactory
+     * @var PhoneCallFactory
      */
     protected $phoneFactory;
 
     /**
      * @param \PDO $db
-     * @param PhoneFactory $phoneFactory
+     * @param PhoneCallFactory $phoneFactory
      */
-    public function __construct(\PDO $db, PhoneFactory $phoneFactory)
+    public function __construct(\PDO $db, PhoneCallFactory $phoneFactory)
     {
         parent::__construct($db);
         $this->phoneFactory = $phoneFactory;
@@ -26,7 +26,7 @@ class PhoneManager extends AbstractManager
 
     /**
      * @param $id
-     * @return Phone|null
+     * @return PhoneCall|null
      */
     public function fetchById($id)
     {
@@ -42,38 +42,43 @@ class PhoneManager extends AbstractManager
         return $phone;
     }
 
-    public function createPhoneCall(User $user, $name, $filePath, $remove = false)
+    /**
+     * @param User $user
+     * @param $name
+     * @return mixed
+     */
+    public function createPhoneCall(User $user, $name)
     {
         $dateTime = new \DateTime();
         $data = [
             'uuid' => Uuid::uuid4(),
             'user' => $user,
             'name' => $name,
-            'file_path' => $filePath,
             'created_at' => $dateTime,
-            'updated_at' => $dateTime,
-            'remove' => $remove
+            'updated_at' => $dateTime
         ];
         $call = $this->phoneFactory->create($data);
 
         $statement = $this->db->prepare(
-            'INSERT INTO phone (uuid, user_id, `name`, file_path, created_at, updated_at)
-            VALUES (:uuid, :user_id, :name, :file_path, :created_at, :updated_at, :$remove)'
+            'INSERT INTO phone (uuid, user_id, `name`, created_at, updated_at, is_active)
+            VALUES (:uuid, :user_id, :name, :created_at, :updated_at, :is_active)'
         );
         $statement->bindValue('uuid', $call->getUuid());
-        //TODO getId is not showing up
         $statement->bindValue('user_id', $call->getUser()->getId());
         $statement->bindValue('name', $call->getName());
-        $statement->bindValue('file_path', $call->getFilePath());
         $statement->bindValue('created_at', $call->getCreatedAt()->format('Y-m-d h:i:s'));
         $statement->bindValue('updated_at', $call->getUpdatedAt()->format('Y-m-d h:i:s'));
-        $statement->bindValue('remove', $call->getRemove());
+        $statement->bindValue('is_active', $call->isDeleted(true));
         $statement->execute();
         $call->setId($this->db->lastInsertId());
 
         return $call;
     }
 
+    /**
+     * @param User $user
+     * @return array
+     */
     public function fetchPhoneByUser(User $user)
     {
         $statement = $this->db->prepare('SELECT * FROM phone WHERE user_id = :user');

@@ -15,25 +15,25 @@ class Version4 extends AbstractManager
 {
     public function up(Schema $schema)
     {
-        $this->addSql("CREATE TABLE phone(
+        $this->addSql("CREATE TABLE phone_calls(
             id int PRIMARY KEY AUTO_INCREMENT,
             uuid CHAR(36) NOT NULL,
             user_id int NOT NULL,
-            name VARCHAR(25) NOT NULL,
-            file_path varchar(50) NOT NULL,
+            name VARCHAR(50) NOT NULL,
+            file_path varchar(400) NOT NULL,
             created_at DATETIME DEFAULT '0000-00-00 00:00:00' NOT NULL,
             updated_at DATETIME DEFAULT '0000-00-00 00:00:00' NOT NULL,
-            remove BOOLEAN DEFAULT false NOT NULL,
+            is_active tinyint DEFAULT 1 NOT NULL,
             INDEX (id),
             INDEX (user_id),
+            INDEX (uuid),
             UNIQUE (uuid),
             FOREIGN KEY (user_id)
                 REFERENCES users(id)
         )");
 
-        //TODO trigger ?
 
-        $this->addSqll("CREATE TABLE phone_user(
+        $this->addSqll("CREATE TABLE phone_call_audio(
             id int PRIMARY KEY AUTO_INCREMENT,
             user_id int NOT NULL,
             phone_id int NOT NULL,
@@ -46,7 +46,7 @@ class Version4 extends AbstractManager
 
     public function down()
     {
-        $this->down("DROP TABLE phone_user");
-        $this->down("DROP TABLE phone");
+        $this->down("DROP TABLE phone_call_audio");
+        $this->down("DROP TABLE phone_calls");
     }
 }

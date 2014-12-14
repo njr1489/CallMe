@@ -2,25 +2,24 @@
 
 namespace CallMe\WebBundle\Entity\Phone;
 
-use CallMe\WebBundle\Entity\Phone;
+use CallMe\WebBundle\Entity\PhoneCall;
 
-class PhoneFactory
+class PhoneCallFactory
 {
     /**
      * @param array $data
-     * @return Phone
+     * @return PhoneCall
      */
     public function create(array $data)
     {
-        return new Phone(
+        return new PhoneCall(
             isset($data['id']) ? $data['id'] : null,
             $data['uuid'],
             $data['user'],
             $data['name'],
-            $data['file_path'],
-            $data['created_at'],
-            $data['updated_at'],
-            $data['remove']
+            new \DateTime($data['created_at']),
+            new \DateTime($data['updated_at']),
+            $data['is_active']
         );
     }
 }
