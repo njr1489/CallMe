@@ -68,7 +68,7 @@ class PhoneCallManager extends AbstractManager
         $statement->bindValue('name', $call->getName());
         $statement->bindValue('created_at', $call->getCreatedAt()->format('Y-m-d h:i:s'));
         $statement->bindValue('updated_at', $call->getUpdatedAt()->format('Y-m-d h:i:s'));
-        $statement->bindValue('is_active', $call->isDeleted(true));
+        $statement->bindValue('is_active', $call->isActive());
         $statement->execute();
         $call->setId($this->db->lastInsertId());
 
