@@ -46,12 +46,12 @@ class PhoneCall
      * @param $name
      * @param \DateTime $createAt
      * @param \DateTime $updatedAt
-        * @param $isActive
-    * @throws \InvalidArgumentException
-        */
-    public function __construct($id, $uuid, User $user, $name,\DateTime $createAt,\DateTime $updatedAt, $isActive)
+     * @param $isActive
+     * @throws \InvalidArgumentException
+     */
+    public function __construct($id, $uuid, User $user, $name, \DateTime $createAt, \DateTime $updatedAt, $isActive)
     {
-        if ( count($name) > 50 ) {
+        if (count($name) > 50) {
             throw new \InvalidArgumentException('User name is greater than 50 characters');
         }
 
