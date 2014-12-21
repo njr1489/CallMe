@@ -37,6 +37,7 @@ class Version4 extends AbstractManager
             id int PRIMARY KEY AUTO_INCREMENT,
             user_id int NOT NULL,
             phone_id int NOT NULL,
+            position int NOT NULL,
             FOREIGN KEY (user_id)
                 REFERENCES users(id),
             FOREIGN KEY (phone_id)
