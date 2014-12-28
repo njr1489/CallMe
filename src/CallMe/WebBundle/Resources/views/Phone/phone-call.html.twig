@@ -1,0 +1,65 @@
+{% extends "CallMeWebBundle::layout.html.twig" %}
+
+{% block content %}
+    <div class="row">
+        <form>
+            <label>name</label>
+            <input type="hidden" name="id" value="">
+            <input id="name" type="text" name="name" value="">
+            <input type="submit" value="Save">
+
+            <div>
+
+            </div>
+        </form>
+    </div>
+
+    <div class="col-md-4 pull-left">
+         <ul class="receiver">
+             <li></li>
+         </ul>
+    </div>
+
+    <div class="col-md-4 pull-right">
+        {% if audio %}
+            <table class="table table-striped">
+                <thead>
+                    <th>Title</th>
+                </thead>
+                <tbody class="audio-drag">
+                {% for audioRow in audio %}
+                    <tr>
+                        <td>{{ audioRow.name }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p class="text-center"> No mp3 files yet</p>
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block javascript %}
+    <script>
+        require(['jquery', 'jqueryui'], function($) {
+            $(document).ready(function() {
+                $('.audio-drag, .receiver').sortable({
+                    remove: function(event, ui) {
+                        ui.item.clone().appendTo('.audio-drag')
+                    },
+                    connectWith: '.receiver'
+                });
+                $('.receiver').droppable({
+                    out: function(event, ui) {
+                        if (ui.draggable.parent().hasClass('receiver')) {
+                            ui.draggable.mouseup(function() {
+                               $(this).remove();
+                            });
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock %}

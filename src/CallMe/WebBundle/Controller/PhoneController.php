@@ -80,4 +80,14 @@ class PhoneController extends Controller
             $response
         );
     }
+
+    /**
+     * @return Response
+     */
+    public function createPhoneCallAction()
+    {
+        return $this->render('CallMeWebBundle:Phone:phone-call.html.twig',[
+            'audio' => $this->get('audio_manager')->fetchAudioByUser($this->getUser())
+        ]);
+    }
 }
