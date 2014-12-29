@@ -15,6 +15,7 @@
     </div>
 
     <div class="col-md-4 pull-left">
+        <h3>Phone Call List</h3>
          <ul class="receiver">
              <li></li>
          </ul>
@@ -22,18 +23,11 @@
 
     <div class="col-md-4 pull-right">
         {% if audio %}
-            <table class="table table-striped">
-                <thead>
-                    <th>Title</th>
-                </thead>
-                <tbody class="audio-drag">
+                <ul class="audio-drag">
                 {% for audioRow in audio %}
-                    <tr>
-                        <td>{{ audioRow.name }}</td>
-                    </tr>
+                    <li data-id="{{ audioRow.id }}">{{ audioRow.name }}</li>
                 {% endfor %}
-                </tbody>
-            </table>
+                </ul>
         {% else %}
             <p class="text-center"> No mp3 files yet</p>
         {% endif %}
@@ -44,13 +38,20 @@
     <script>
         require(['jquery', 'jqueryui'], function($) {
             $(document).ready(function() {
-                $('.audio-drag, .receiver').sortable({
-                    remove: function(event, ui) {
-                        ui.item.clone().appendTo('.audio-drag')
+                $('.audio-drag').sortable({
+                    stop: function(event, ui) {
+                        var nextItem = ui.item.next();
+                        var clonedItem = $(ui.item).clone(true).removeClass('box ui-draggable ui-draggable-dragging ');
+                        if (nextItem) {
+                           nextItem.before(clonedItem)
+                        } else {
+                            clonedItem.appendTo('.receiver');
+                        }
+                        $(this).sortable('cancel');
                     },
                     connectWith: '.receiver'
                 });
-                $('.receiver').droppable({
+                $('.receiver').sortable().droppable({
                     out: function(event, ui) {
                         if (ui.draggable.parent().hasClass('receiver')) {
                             ui.draggable.mouseup(function() {
