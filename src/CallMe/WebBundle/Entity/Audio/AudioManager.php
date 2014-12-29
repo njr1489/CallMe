@@ -37,7 +37,7 @@ class AudioManager extends AbstractManager
      */
     public function fetchById($id)
     {
-        $statement = $this->db->prepare('SELECT * FROM audio WHERE id = :id');
+        $statement = $this->db->prepare('SELECT  FROM audio WHERE id = :id');
         $statement->bindValue('id', $id);
         $statement->execute();
 
@@ -84,6 +84,22 @@ class AudioManager extends AbstractManager
         return $audio;
     }
 
+    /**
+     * @param Audio $audio
+     * @return bool
+     */
+    public function deleteAudio(Audio $audio)
+    {
+        $statement = $this->db->prepare('DELETE FROM audio WHERE id = :id');
+        $statement->bindValue('id', $audio->getId());
+        $statement->execute();
+        return true;
+    }
+
+    /**
+     * @param User $user
+     * @return array
+     */
     public function fetchAudioByUser(User $user)
     {
         $statement = $this->db->prepare('SELECT * FROM audio WHERE user_id = :user');

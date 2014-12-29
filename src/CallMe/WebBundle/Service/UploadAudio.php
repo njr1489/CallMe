@@ -10,6 +10,7 @@
 namespace CallMe\WebBundle\Service;
 
 use Aws\S3\S3Client;
+use CallMe\WebBundle\Entity\Audio;
 use CallMe\WebBundle\Entity\User;
 use CallMe\WebBundle\Entity\Audio\AudioManager;
 
@@ -43,9 +44,10 @@ class UploadAudio
      */
     public function uploadAudio($name, $audioFile, User $user)
     {
-        $bucket = 'user-'.$user->getId();
+        $bucket = 'user-' . $user->getId();
 
         $fileInfo = new \finfo(FILEINFO_MIME_TYPE);
+
         if ($fileInfo->file($audioFile) != 'audio/mpeg') {
             throw new \InvalidArgumentException('Audio file is not an mp3');
         }
@@ -62,5 +64,23 @@ class UploadAudio
         ]);
 
         return $this->audioManager->createAudio($user, $name, $response['ObjectURL']);
+    }
+
+    /**
+     * @param Audio $audio
+     * @return bool
+     */
+    public function deleteAudio(Audio $audio)
+    {
+        $response = $this->s3Client->deleteObject([
+            'Bucket'        => 'user-' . $audio->getUser()->getId(),
+            'Key'           => $audio->getName()
+        ]);
+
+        if ($response['DeleteMarker']) {
+            $this->audioManager->deleteAudio($audio);
+            return true;
+        }
+        return false;
     }
 }

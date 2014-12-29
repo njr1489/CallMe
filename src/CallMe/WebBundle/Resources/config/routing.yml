@@ -59,6 +59,11 @@ audio_upload:
     defaults: { _controller: CallMeWebBundle:Audio:uploadAudio }
     methods: [POST]
 
+audio_delete:
+    pattern: /audio/{id}
+    defaults: { _controller: CallMeWebBundle:Audio:deleteAudio }
+    methods: [DELETE]
+
 make_call:
     pattern: /phone/demo
     defaults: { _controller: CallMeWebBundle:Phone:call }
