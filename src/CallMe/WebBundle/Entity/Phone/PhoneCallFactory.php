@@ -17,8 +17,8 @@ class PhoneCallFactory
             $data['uuid'],
             $data['user'],
             $data['name'],
-            new \DateTime($data['created_at']),
-            new \DateTime($data['updated_at']),
+            $data['created_at'] instanceof \DateTime ? $data['created_at'] : new \DateTime($data['created_at']),
+            $data['updated_at'] instanceof \DateTime ? $data['updated_at'] : new \DateTime($data['updated_at']),
             $data['is_active']
         );
     }

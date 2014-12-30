@@ -45,9 +45,10 @@ class PhoneCallManager extends AbstractManager
     /**
      * @param User $user
      * @param $name
-     * @return mixed
+     * @param array $audioIds
+     * @return PhoneCall
      */
-    public function createPhoneCall(User $user, $name)
+    public function createPhoneCall(User $user, $name, array $audioIds)
     {
         $dateTime = new \DateTime();
         $data = [
@@ -55,12 +56,14 @@ class PhoneCallManager extends AbstractManager
             'user' => $user,
             'name' => $name,
             'created_at' => $dateTime,
-            'updated_at' => $dateTime
+            'updated_at' => $dateTime,
+            'is_active' => true
         ];
         $call = $this->phoneFactory->create($data);
 
+        $this->db->beginTransaction();
         $statement = $this->db->prepare(
-            'INSERT INTO phone (uuid, user_id, `name`, created_at, updated_at, is_active)
+            'INSERT INTO phone_calls (uuid, user_id, `name`, created_at, updated_at, is_active)
             VALUES (:uuid, :user_id, :name, :created_at, :updated_at, :is_active)'
         );
         $statement->bindValue('uuid', $call->getUuid());
@@ -71,6 +74,14 @@ class PhoneCallManager extends AbstractManager
         $statement->bindValue('is_active', $call->isActive());
         $statement->execute();
         $call->setId($this->db->lastInsertId());
+
+        $rows = [];
+        foreach ($audioIds as $index => $audioId) {
+            $rows[] = sprintf('(%d, %s, %d)', $user->getId(), $this->db->quote($audioId), $index + 1);
+        }
+
+        $this->db->query('INSERT INTO phone_call_audio (user_id, audio_id, position) VALUES ' . implode(',', $rows));
+        $this->db->commit();
 
         return $call;
     }
