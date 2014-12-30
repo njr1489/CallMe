@@ -26,8 +26,8 @@ class AudioFactory
             $data['user'],
             $data['name'],
             $data['file_path'],
-            $data['created_at'],
-            $data['updated_at']
+            new \DateTime($data['created_at']),
+            new \DateTime($data['updated_at'])
         );
     }
 }
