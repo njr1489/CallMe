@@ -72,15 +72,11 @@ class UploadAudio
      */
     public function deleteAudio(Audio $audio)
     {
-        $response = $this->s3Client->deleteObject([
+        $this->s3Client->deleteObject([
             'Bucket'        => 'user-' . $audio->getUser()->getId(),
             'Key'           => $audio->getName()
         ]);
 
-        if ($response['DeleteMarker']) {
-            $this->audioManager->deleteAudio($audio);
-            return true;
-        }
-        return false;
+        $this->audioManager->deleteAudio($audio);
     }
 }

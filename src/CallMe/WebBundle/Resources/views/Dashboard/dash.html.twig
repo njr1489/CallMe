@@ -32,11 +32,13 @@
     require(['jquery'], function($) {
         $(document).ready(function() {
             $('.delete').click(function(e) {
+                var tr = $(this).parents().eq(2);
                 $.ajax({
                     url: '/audio/' + $(this).attr('data-id'),
                     type: 'DELETE',
                     success: function(data){
                         $('.flash-notice').removeClass('hidden').html(data['message']);
+                        tr.remove();
                     }
                 })
             });

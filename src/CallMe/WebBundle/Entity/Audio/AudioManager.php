@@ -68,8 +68,8 @@ class AudioManager extends AbstractManager
                 'user' => $user,
                 'name' => $data['name'],
                 'file_path' => $data['file_path'],
-                'created_at' => $data['audio_created_at'],
-                'updated_at' => $data['audio_updated_at']
+                'created_at' => new \DateTime($data['audio_created_at']),
+                'updated_at' => new \DateTime($data['audio_updated_at'])
             ]);
         }
 
@@ -113,14 +113,12 @@ class AudioManager extends AbstractManager
 
     /**
      * @param Audio $audio
-     * @return bool
      */
     public function deleteAudio(Audio $audio)
     {
         $statement = $this->db->prepare('DELETE FROM audio WHERE id = :id');
         $statement->bindValue('id', $audio->getId());
         $statement->execute();
-        return true;
     }
 
     /**
