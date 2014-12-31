@@ -33,3 +33,9 @@ services:
         class: CallMe\WebBundle\Service\UploadAudio
         arguments: [@audio_manager, @s3]
 
+    phone_factory:
+        class: CallMe\WebBundle\Entity\Phone\PhoneCallFactory
+
+    phone_call_manager:
+        class: CallMe\WebBundle\Entity\Phone\PhoneCallManager
+        arguments: [@db, @phone_factory]

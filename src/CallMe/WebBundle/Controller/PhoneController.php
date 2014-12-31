@@ -2,6 +2,7 @@
 
 namespace CallMe\WebBundle\Controller;
 
+use CallMe\WebBundle\Entity\Phone\PhoneCallManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -79,5 +80,23 @@ class PhoneController extends Controller
             ['number' => $request->request->get('number')],
             $response
         );
+    }
+
+    /**
+     * @return Response
+     */
+    public function createPhoneCallAction()
+    {
+        return $this->render('CallMeWebBundle:Phone:phone-call.html.twig', [
+            'audio' => $this->get('audio_manager')->fetchAudioByUser($this->getUser())
+        ]);
+    }
+
+    public function processCreatePhoneCallAction(Request $request)
+    {
+        $data = $request->request->all();
+        $phoneCallManager = $this->get('phone_call_manager');
+        $phoneCallManager->createPhoneCall($this->getUser(), $data['name'], $data['audio']);
+        return new JsonResponse(['message' => 'Your phone call was saved', 'success' => true]);
     }
 }

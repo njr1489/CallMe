@@ -83,3 +83,13 @@ dashboard_index:
     pattern: /dashboard
     defaults: { _controller: CallMeWebBundle:Default:dashboard }
     methods: [GET]
+
+phone_call:
+    pattern: /phone-call
+    defaults: { _controller: CallMeWebBundle:Phone:createPhoneCall }
+    methods: [GET]
+
+process_create_phone_call:
+    pattern: /phone-call
+    defaults: { _controller: CallMeWebBundle:Phone:processCreatePhoneCall }
+    methods: [POST]
