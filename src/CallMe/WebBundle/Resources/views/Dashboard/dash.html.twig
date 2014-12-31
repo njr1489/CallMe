@@ -2,6 +2,8 @@
 
 {% block content %}
     <h2>DashBoard</h2>
+    <div class="flash-notice hidden">
+    </div>
     <div class="row">
         {% if audio %}
             <table class="table table-striped">
@@ -13,6 +15,9 @@
                     <tr>
                         <td>{{ audioRow.name }}</td>
                         <td>{{ audioRow.created_at|date("m/d/Y") }}</td>
+                        <td>
+                            <a><span class="glyphicon glyphicon-remove delete" data-id="{{ audioRow.id }}" aria-hidden="true"></span></a>
+                        </td>
                     </tr>
                 {% endfor %}
             </table>
@@ -20,4 +25,24 @@
             <p class="text-center">No phone calls have been made.</p>
         {% endif %}
     </div>
+{% endblock %}
+
+{% block javascript %}
+<script>
+    require(['jquery'], function($) {
+        $(document).ready(function() {
+            $('.delete').click(function(e) {
+                var tr = $(this).parents().eq(2);
+                $.ajax({
+                    url: '/audio/' + $(this).attr('data-id'),
+                    type: 'DELETE',
+                    success: function(data){
+                        $('.flash-notice').removeClass('hidden').html(data['message']);
+                        tr.remove();
+                    }
+                })
+            });
+        });
+    });
+</script>
 {% endblock %}

@@ -27,7 +27,7 @@ services:
 
     audio_manager:
         class: CallMe\WebBundle\Entity\Audio\AudioManager
-        arguments: [@db, @audio_factory]
+        arguments: [@db, @audio_factory, @user_factory]
 
     audio_uploader:
         class: CallMe\WebBundle\Service\UploadAudio

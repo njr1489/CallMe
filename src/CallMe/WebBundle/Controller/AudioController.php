@@ -9,6 +9,7 @@
 namespace CallMe\WebBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 class AudioController extends Controller
@@ -34,7 +35,25 @@ class AudioController extends Controller
             $this->get('session')->getFlashBag()->add('notice', 'Your file was successfully uploaded.');
         } catch (\InvalidArgumentException $e) {
             $this->get('session')->getFlashBag()->add('notice', 'An error happened while you were trying to upload, please try again.');
+            $this->get('logger')->error($e->getMessage());
         }
         return $this->redirect($this->generateUrl('audio_index'));
+    }
+
+    /**
+     * @param Request $request
+     * @param $id
+     * @return JsonResponse
+     */
+    public function deleteAudioAction(Request $request, $id)
+    {
+        $audio = $this->get('audio_manager')->fetchById($id);
+        if ($audio) {
+            $this->get('audio_uploader')->deleteAudio($audio);
+            $message = 'The audio file was successfully deleted';
+        } else {
+            $message = 'The audio file was not found';
+        }
+        return new JsonResponse(['message' => $message]);
     }
 }
