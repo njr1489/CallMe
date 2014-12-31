@@ -90,9 +90,9 @@ class PhoneCallManager extends AbstractManager
      * @param User $user
      * @return array
      */
-    public function fetchPhoneByUser(User $user)
+    public function fetchPhoneCallsByUser(User $user)
     {
-        $statement = $this->db->prepare('SELECT * FROM phone WHERE user_id = :user');
+        $statement = $this->db->prepare('SELECT * FROM phone_calls WHERE user_id = :user');
 
         $statement->bindValue('user', $user->getId());
         $statement->execute();

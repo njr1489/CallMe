@@ -2,16 +2,16 @@
 
 {% block content %}
     <div class="row">
-        <form>
-            <label>name</label>
-            <input type="hidden" name="id" value="">
-            <input id="name" type="text" name="name" value="">
-            <input type="submit" value="Save" class="saveCall">
-
-            <div>
-
-            </div>
-        </form>
+        <div class="col-md-4">
+            <form>
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="hidden" name="id" value="">
+                    <input id="name" type="text" name="name" value="" class="form-control pull-left">
+                    <input type="submit" value="Save" class="saveCall btn btn-info pull-right">
+                </div>
+            </form>
+        </div>
     </div>
 
     <div class="col-md-4 pull-left">
@@ -29,7 +29,7 @@
                 {% endfor %}
                 </ul>
         {% else %}
-            <p class="text-center"> No mp3 files yet</p>
+            <p class="text-center"> No audio files yet</p>
         {% endif %}
     </div>
 {% endblock %}
@@ -40,12 +40,14 @@
             $(document).ready(function() {
                 $('.audio-drag').sortable({
                     stop: function(event, ui) {
-                        var nextItem = ui.item.next();
-                        var clonedItem = $(ui.item).clone(true).removeClass('box ui-draggable ui-draggable-dragging');
-                        if (nextItem) {
-                           nextItem.before(clonedItem)
-                        } else {
-                            clonedItem.appendTo('.receiver');
+                        if (ui.item.parent().hasClass('receiver')) {
+                            var nextItem = ui.item.next();
+                            var clonedItem = $(ui.item).clone(true).removeClass('box ui-draggable ui-draggable-dragging');
+                            if (nextItem) {
+                               nextItem.before(clonedItem)
+                            } else {
+                                clonedItem.appendTo('.receiver');
+                            }
                         }
                         $(this).sortable('cancel');
                     },
