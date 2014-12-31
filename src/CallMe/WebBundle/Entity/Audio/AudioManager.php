@@ -21,6 +21,10 @@ class AudioManager extends AbstractManager
      * @var AudioFactory
      */
     protected $audioFactory;
+
+    /**
+     * @var \CallMe\WebBundle\Entity\User\UserFactory
+     */
     protected $userFactory;
 
     /**
