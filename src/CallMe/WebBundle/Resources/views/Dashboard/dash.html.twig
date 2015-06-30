@@ -1,15 +1,38 @@
 {% extends "CallMeWebBundle::layout.html.twig" %}
 
 {% block content %}
-    <h2>DashBoard</h2>
-    <div class="flash-notice hidden">
+    <h2 xmlns="http://www.w3.org/1999/html">DashBoard</h2>
+
+    <div class="pull-right">
+        <a href="{{ path('phone_call') }}" class="btn btn-info">Create Phone Call</a>
     </div>
+
+        <h3>Phone Calls</h3>
+        <div class="row">
+            {% if phoneCalls %}
+                <table class="table table-striped">
+                    <thead>
+                        <th>Title</th>
+                        <th>Created</th>
+                    </thead>
+                    {% for call in phoneCalls %}
+                    <tr>
+                        <td>{{ call.name }}</td>
+                        <td>{{ call.created_at|date("m/d/y") }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            {% endif %}
+        </div>
+
+
+    <h3>Audio Files</h3>
     <div class="row">
         {% if audio %}
             <table class="table table-striped">
                 <thead>
                     <th>Title</th>
-                    <th>Time</th>
+                    <th>Created</th>
                 </thead>
                 {% for audioRow in audio %}
                     <tr>
