@@ -56,7 +56,8 @@ class DefaultController extends Controller
     public function dashboardAction()
     {
         return $this->render('CallMeWebBundle:Dashboard:dash.html.twig', [
-            'audio' => $this->get('audio_manager')->fetchAudioByUser($this->getUser())
+            'audio' => $this->get('audio_manager')->fetchAudioByUser($this->getUser()),
+            'phoneCalls' => $this->get('phone_call_manager')->fetchPhoneCallsByUser($this->getUser())
         ]);
     }
 }
