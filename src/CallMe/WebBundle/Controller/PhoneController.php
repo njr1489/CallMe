@@ -92,6 +92,10 @@ class PhoneController extends Controller
         ]);
     }
 
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
     public function processCreatePhoneCallAction(Request $request)
     {
         $data = $request->request->all();
